@@ -33,12 +33,12 @@ namespace ProNet
 
         public bool HasRecommended(Tuple<int, IProgrammer> programmerToProcess, IProgrammer programmer)
         {
-            return programmerToProcess.Item2.Recommendations.Contains(programmer);
+            return programmerToProcess.Item2.HasRecommended(programmer);
         }
 
         public bool IsRecommendedBy(Tuple<int, IProgrammer> programmerToProcess, IProgrammer programmer)
         {
-            return programmerToProcess.Item2.RecommendedBys.Contains(programmer);
+            return programmerToProcess.Item2.WasRecommendedBy(programmer);
         }
 
         public void AddRecommendationsTo(Queue<Tuple<int, IProgrammer>> queue, int degreeOfSeparation, IProgrammer processed)

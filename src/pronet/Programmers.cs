@@ -6,10 +6,12 @@ namespace ProNet
     public class Programmers : IProgrammers
     {
         public readonly IEnumerable<IProgrammer> _programmers;
+        private DegreesOfSeparation _degreesOfSeparation;
 
         public Programmers(List<IProgrammer> programmers)
         {
             _programmers = programmers;
+            _degreesOfSeparation = new DegreesOfSeparation();
         }
 
         public void Calculate()
@@ -36,7 +38,7 @@ namespace ProNet
 
         public int DegreesOfSeparation(string programmer1, string programmer2)
         {
-            return GetByName(programmer1).DegreesOfSeparation(GetByName(programmer2));
+            return _degreesOfSeparation.Calculate(GetByName(programmer1), GetByName(programmer2));
         }
 
         public void AddRecommendation(string recommender, string recommendation)

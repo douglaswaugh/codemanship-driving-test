@@ -6,11 +6,10 @@ namespace ProNet
     public class Programmer : IProgrammer
     {
         private readonly string _name;
+        private decimal _rank;
         private readonly ICollection<IProgrammer> _recommendations;
         private readonly ICollection<IProgrammer> _recommendedBys;
         private readonly IEnumerable<string> _skills;
-        private readonly DegreesOfSeparation _degreesOfSeparation;
-        private readonly ProgrammerRank _programmerRank;
 
         public Programmer(string name, IEnumerable<string> skills)
         {
@@ -18,28 +17,19 @@ namespace ProNet
             _recommendedBys = new List<IProgrammer>();
             _name = name;
             _skills = skills;
-            _degreesOfSeparation = new DegreesOfSeparation();
-            _programmerRank = new ProgrammerRank();
         }
 
         public decimal Rank
         {
-            get => _programmerRank.Rank;
-            set => _programmerRank.Rank = value;
+            get => _rank;
+            set => _rank = value;
         }
         public string Name => _name;
         public IEnumerable<string> RecommendedProgrammers => _recommendations.Select(programmer => programmer.Name);
         public IEnumerable<string> Skills => _skills;
-
-        public ICollection<IProgrammer> Recommendations => _recommendations;
-        public ICollection<IProgrammer> RecommendedBys => _recommendedBys;
-
-        public decimal ProgrammerRankShare => _programmerRank.ProgrammerRankShare(_recommendations);
-
-        public void UpdateRank()
-        {
-            _programmerRank.UpdateRank(_recommendedBys);
-        }
+        public decimal ProgrammerRankShare => Rank / _recommendations.Count;
+        public IEnumerable<IProgrammer> Recommendations => _recommendations;
+        public IEnumerable<IProgrammer> RecommendedBys => _recommendedBys;
 
         public void Recommends(IProgrammer programmer)
         {
@@ -52,9 +42,21 @@ namespace ProNet
             _recommendedBys.Add(programmer);
         }
 
-        public int DegreesOfSeparation(IProgrammer programmer)
+        public void UpdateRank()
         {
-            return _degreesOfSeparation.Calculate(this, programmer);
+            // (1 - d) + d(PR(T1)/C(T1)) + ... + d(PR(Tn)/C(Tn))
+            Rank = _recommendedBys
+                .Aggregate(1m - 0.85m, (current, programmer) => current + 0.85m * programmer.ProgrammerRankShare);
+        }
+
+        public bool HasRecommended(IProgrammer programmer)
+        {
+            return _recommendations.Contains(programmer);
+        }
+
+        public bool WasRecommendedBy(IProgrammer programmer)
+        {
+            return _recommendations.Contains(programmer);
         }
     }
 }
