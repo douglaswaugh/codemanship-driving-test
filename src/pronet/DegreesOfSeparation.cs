@@ -23,9 +23,7 @@ namespace ProNet
                 if (IsRecommendedBy(programmerToProcess, programmer))
                     return programmerToProcess.Item1;
 
-                AddRecommendationsTo(toProcess, programmerToProcess.Item1 + 1, programmerToProcess.Item2);
-
-                AddRecommendedBysTo(toProcess, programmerToProcess.Item1 + 1, programmerToProcess.Item2);
+                AddRelationsTo(toProcess, programmerToProcess.Item1 + 1, programmerToProcess.Item2);
             }
 
             throw new ProgrammersNotConnectedException();
@@ -41,21 +39,12 @@ namespace ProNet
             return programmerToProcess.Item2.WasRecommendedBy(programmer);
         }
 
-        public void AddRecommendationsTo(Queue<Tuple<int, IProgrammer>> queue, int degreeOfSeparation, IProgrammer processed)
+        public void AddRelationsTo(Queue<Tuple<int, IProgrammer>> queue, int degreeOfSeparation, IProgrammer processed)
         {
-            foreach (var recommendation in processed.Recommendations)
+            foreach (var relation in processed.Relations)
             {
-                if (processed != recommendation)
-                    queue.Enqueue(new Tuple<int, IProgrammer>(degreeOfSeparation, recommendation));
-            }
-        }
-
-        public void AddRecommendedBysTo(Queue<Tuple<int, IProgrammer>> queue, int degreeOfSeparation, IProgrammer processed)
-        {
-            foreach (var recommendedBy in processed.RecommendedBys)
-            {
-                if (processed != recommendedBy)
-                    queue.Enqueue(new Tuple<int, IProgrammer>(degreeOfSeparation, recommendedBy));
+                if (processed != relation)
+                    queue.Enqueue(new Tuple<int, IProgrammer>(degreeOfSeparation, relation));
             }
         }
     }

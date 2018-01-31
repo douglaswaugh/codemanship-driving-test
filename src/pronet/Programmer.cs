@@ -28,8 +28,7 @@ namespace ProNet
         public IEnumerable<string> RecommendedProgrammers => _recommendations.Select(programmer => programmer.Name);
         public IEnumerable<string> Skills => _skills;
         public decimal ProgrammerRankShare => Rank / _recommendations.Count;
-        public IEnumerable<IProgrammer> Recommendations => _recommendations;
-        public IEnumerable<IProgrammer> RecommendedBys => _recommendedBys;
+        public IEnumerable<IProgrammer> Relations => _recommendations.Concat(_recommendedBys);
 
         public void Recommends(IProgrammer programmer)
         {

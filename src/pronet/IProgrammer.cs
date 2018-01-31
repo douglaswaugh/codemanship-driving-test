@@ -9,8 +9,7 @@ namespace ProNet
         IEnumerable<string> Skills { get; }
         decimal Rank { get; }
         decimal ProgrammerRankShare { get; }
-        IEnumerable<IProgrammer> Recommendations { get; }
-        IEnumerable<IProgrammer> RecommendedBys { get; }
+        IEnumerable<IProgrammer> Relations { get; }
 
         void UpdateRank();
         void Recommends(IProgrammer programmer);
