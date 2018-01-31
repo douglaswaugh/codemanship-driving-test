@@ -48,14 +48,19 @@ namespace ProNet
                 .Aggregate(1m - 0.85m, (current, programmer) => current + 0.85m * programmer.ProgrammerRankShare);
         }
 
-        public bool HasRecommended(IProgrammer programmer)
+        private bool HasRecommended(IProgrammer programmer)
         {
             return _recommendations.Contains(programmer);
         }
 
-        public bool WasRecommendedBy(IProgrammer programmer)
+        private bool WasRecommendedBy(IProgrammer programmer)
         {
             return _recommendations.Contains(programmer);
+        }
+
+        public bool IsRelatedTo(IProgrammer programmer)
+        {
+            return WasRecommendedBy(programmer) || HasRecommended(programmer);
         }
     }
 }

@@ -14,7 +14,6 @@ namespace ProNet
         void UpdateRank();
         void Recommends(IProgrammer programmer);
         void RecommendedBy(IProgrammer programmer);
-        bool HasRecommended(IProgrammer programmer);
-        bool WasRecommendedBy(IProgrammer programmer);
+        bool IsRelatedTo(IProgrammer programmer);
     }
 }

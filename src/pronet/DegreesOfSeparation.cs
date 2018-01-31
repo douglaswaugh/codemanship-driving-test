@@ -17,10 +17,7 @@ namespace ProNet
             {
                 var programmerToProcess = toProcess.Dequeue();
 
-                if (HasRecommended(programmerToProcess, programmer))
-                    return programmerToProcess.Item1;
-
-                if (IsRecommendedBy(programmerToProcess, programmer))
+                if (AreRelated(programmerToProcess, programmer))
                     return programmerToProcess.Item1;
 
                 AddRelationsTo(toProcess, programmerToProcess.Item1 + 1, programmerToProcess.Item2);
@@ -29,14 +26,9 @@ namespace ProNet
             throw new ProgrammersNotConnectedException();
         }
 
-        public bool HasRecommended(Tuple<int, IProgrammer> programmerToProcess, IProgrammer programmer)
+        public bool AreRelated(Tuple<int, IProgrammer> programmerToProcess, IProgrammer programmer)
         {
-            return programmerToProcess.Item2.HasRecommended(programmer);
-        }
-
-        public bool IsRecommendedBy(Tuple<int, IProgrammer> programmerToProcess, IProgrammer programmer)
-        {
-            return programmerToProcess.Item2.WasRecommendedBy(programmer);
+            return programmerToProcess.Item2.IsRelatedTo(programmer);
         }
 
         public void AddRelationsTo(Queue<Tuple<int, IProgrammer>> queue, int degreeOfSeparation, IProgrammer processed)
