@@ -15,12 +15,12 @@ namespace ProNet
             return ProcessQueue(programmer, toProcess);
         }
 
-        public bool AreRelated(Tuple<int, IProgrammer> programmerToProcess, IProgrammer programmer)
+        private bool AreRelated(Tuple<int, IProgrammer> programmerToProcess, IProgrammer programmer)
         {
             return programmerToProcess.Item2.IsRelatedTo(programmer);
         }
 
-        public void AddRelationsTo(Queue<Tuple<int, IProgrammer>> queue, int degreeOfSeparation, IProgrammer processed)
+        private void AddRelationsTo(Queue<Tuple<int, IProgrammer>> queue, int degreeOfSeparation, IProgrammer processed)
         {
             foreach (var relation in processed.Relations)
             {
