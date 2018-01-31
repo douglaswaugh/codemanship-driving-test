@@ -9,21 +9,10 @@ namespace ProNet
         {
             if (programmerFrom == programmer)
                 return 0;
+            
+            var toProcess = InitializeQueue(programmerFrom);
 
-            var toProcess = new Queue<Tuple<int, IProgrammer>>();
-            toProcess.Enqueue(new Tuple<int, IProgrammer>(1, programmerFrom));
-
-            while (toProcess.Count > 0)
-            {
-                var programmerToProcess = toProcess.Dequeue();
-
-                if (AreRelated(programmerToProcess, programmer))
-                    return programmerToProcess.Item1;
-
-                AddRelationsTo(toProcess, programmerToProcess.Item1 + 1, programmerToProcess.Item2);
-            }
-
-            throw new ProgrammersNotConnectedException();
+            return ProcessQueue(programmer, toProcess);
         }
 
         public bool AreRelated(Tuple<int, IProgrammer> programmerToProcess, IProgrammer programmer)
@@ -38,6 +27,28 @@ namespace ProNet
                 if (processed != relation)
                     queue.Enqueue(new Tuple<int, IProgrammer>(degreeOfSeparation, relation));
             }
+        }
+
+        private int ProcessQueue(IProgrammer programmer, Queue<Tuple<int, IProgrammer>> toProcess)
+        {
+            while (toProcess.Count > 0)
+            {
+                var programmerToProcess = toProcess.Dequeue();
+
+                if (AreRelated(programmerToProcess, programmer))
+                    return programmerToProcess.Item1;
+
+                AddRelationsTo(toProcess, programmerToProcess.Item1 + 1, programmerToProcess.Item2);
+            }
+
+            throw new ProgrammersNotConnectedException();
+        }
+
+        private Queue<Tuple<int, IProgrammer>> InitializeQueue(IProgrammer programmerFrom)
+        {
+            var toProcess = new Queue<Tuple<int, IProgrammer>>();
+            AddRelationsTo(toProcess, 2, programmerFrom);
+            return toProcess;
         }
     }
 }
