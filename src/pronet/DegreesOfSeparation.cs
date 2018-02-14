@@ -32,8 +32,22 @@ namespace ProNet
             }
         }
 
-        private int ProcessQueue(IProgrammer programmer, Queue<Tuple<int, IProgrammer>> toProcess)
+        private int ProcessQueue(IProgrammer programmer, List<Tuple<int, IProgrammer>> toProcess)
         {
+            foreach (var networkProgrammer in toProcess)
+            {
+                if (AreRelated(networkProgrammer, programmer))
+                    return networkProgrammer.Item1;
+            }
+
+            throw new ProgrammersNotConnectedException();
+        }
+
+        private List<Tuple<int, IProgrammer>> InitializeQueue(IProgrammer programmerFrom)
+        {
+            var toProcess = new Queue<Tuple<int, IProgrammer>>();
+            AddRelationsTo(toProcess, 2, programmerFrom, new List<Tuple<int, IProgrammer>>());
+
             var network = new List<Tuple<int, IProgrammer>>();
 
             while (toProcess.Count > 0)
@@ -45,20 +59,7 @@ namespace ProNet
                 AddRelationsTo(toProcess, programmerToProcess.Item1 + 1, programmerToProcess.Item2, network);
             }
 
-            foreach (var networkProgrammer in network)
-            {
-                if (AreRelated(networkProgrammer, programmer))
-                    return networkProgrammer.Item1;
-            }
-
-            throw new ProgrammersNotConnectedException();
-        }
-
-        private Queue<Tuple<int, IProgrammer>> InitializeQueue(IProgrammer programmerFrom)
-        {
-            var toProcess = new Queue<Tuple<int, IProgrammer>>();
-            AddRelationsTo(toProcess, 2, programmerFrom, new List<Tuple<int, IProgrammer>>());
-            return toProcess;
+            return network;
         }
     }
 }
