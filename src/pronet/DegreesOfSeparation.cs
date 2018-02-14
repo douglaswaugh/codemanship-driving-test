@@ -20,7 +20,7 @@ namespace ProNet
             
             var toProcess = _degreesOfSeparationNetwork.BuildNetwork(programmerFrom);
 
-            return ProcessQueue(programmer, toProcess);
+            return FindDegrees(programmer, toProcess);
         }
 
         private bool AreRelated(Tuple<int, IProgrammer> programmerToProcess, IProgrammer programmer)
@@ -39,7 +39,7 @@ namespace ProNet
             }
         }
 
-        private int ProcessQueue(IProgrammer programmer, List<Tuple<int, IProgrammer>> toProcess)
+        private int FindDegrees(IProgrammer programmer, List<Tuple<int, IProgrammer>> toProcess)
         {
             foreach (var networkProgrammer in toProcess)
             {
