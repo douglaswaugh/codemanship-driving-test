@@ -11,7 +11,7 @@ namespace ProNet
             if (programmerFrom == programmer)
                 return 0;
             
-            var toProcess = InitializeQueue(programmerFrom);
+            var toProcess = BuildNetwork(programmerFrom);
 
             return ProcessQueue(programmer, toProcess);
         }
@@ -43,7 +43,7 @@ namespace ProNet
             throw new ProgrammersNotConnectedException();
         }
 
-        private List<Tuple<int, IProgrammer>> InitializeQueue(IProgrammer programmerFrom)
+        private List<Tuple<int, IProgrammer>> BuildNetwork(IProgrammer programmerFrom)
         {
             var toProcess = new Queue<Tuple<int, IProgrammer>>();
             AddRelationsTo(toProcess, 2, programmerFrom, new List<Tuple<int, IProgrammer>>());
