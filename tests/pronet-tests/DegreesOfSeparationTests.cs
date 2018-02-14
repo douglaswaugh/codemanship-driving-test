@@ -5,12 +5,12 @@ using ProNet;
 
 namespace Tests
 {
-    public class DegreesOfSeparationTests
+    public class DegreesOfSeparationNetworkTests
     {
         [Test]
         public void Add_relations_to_should_add_programmers_recommendations()
         {
-            var degreesOfSeparation = new DegreesOfSeparation();
+            var degreesOfSeparation = new DegreesOfSeparationNetwork();
 
             var queue = new Queue<Tuple<int, IProgrammer>>();
 
@@ -34,7 +34,7 @@ namespace Tests
             var programmer2 = new Programmer("Programmer2", new string[]{});
             programmer1.Recommends(programmer2);
 
-            var degreesOfSeparation = new DegreesOfSeparation();
+            var degreesOfSeparation = new DegreesOfSeparationNetwork();
             var queue = new Queue<Tuple<int, IProgrammer>>();
 
             degreesOfSeparation.AddRelationsTo(queue, 1, programmer2, new List<Tuple<int, IProgrammer>>());
@@ -58,7 +58,7 @@ namespace Tests
             var queue = new Queue<Tuple<int, IProgrammer>>();
             queue.Enqueue(new Tuple<int, IProgrammer>(1, programmerAlreadyInQueue));
 
-            var degreesOfSeparation = new DegreesOfSeparation();
+            var degreesOfSeparation = new DegreesOfSeparationNetwork();
             degreesOfSeparation.AddRelationsTo(queue, 2, programmer1 , new List<Tuple<int, IProgrammer>>());
 
             var expectedQueue = new Queue<Tuple<int, IProgrammer>>();

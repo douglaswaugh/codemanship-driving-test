@@ -6,12 +6,19 @@ namespace ProNet
 {
     public class DegreesOfSeparation
     {
+        DegreesOfSeparationNetwork _degreesOfSeparationNetwork;
+
+        public DegreesOfSeparation()
+        {
+            _degreesOfSeparationNetwork = new DegreesOfSeparationNetwork();
+        }
+
         public int Calculate(IProgrammer programmerFrom, IProgrammer programmer)
         {
             if (programmerFrom == programmer)
                 return 0;
             
-            var toProcess = BuildNetwork(programmerFrom);
+            var toProcess = _degreesOfSeparationNetwork.BuildNetwork(programmerFrom);
 
             return ProcessQueue(programmer, toProcess);
         }
@@ -41,25 +48,6 @@ namespace ProNet
             }
 
             throw new ProgrammersNotConnectedException();
-        }
-
-        private List<Tuple<int, IProgrammer>> BuildNetwork(IProgrammer programmerFrom)
-        {
-            var toProcess = new Queue<Tuple<int, IProgrammer>>();
-            AddRelationsTo(toProcess, 2, programmerFrom, new List<Tuple<int, IProgrammer>>());
-
-            var network = new List<Tuple<int, IProgrammer>>();
-
-            while (toProcess.Count > 0)
-            {
-                var programmerToProcess = toProcess.Dequeue();
-
-                network.Add(programmerToProcess);
-
-                AddRelationsTo(toProcess, programmerToProcess.Item1 + 1, programmerToProcess.Item2, network);
-            }
-
-            return network;
         }
     }
 }
