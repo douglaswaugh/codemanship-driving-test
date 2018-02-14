@@ -19,7 +19,7 @@ namespace Tests
 
             programmer1.Recommends(programmer2);
 
-            degreesOfSeparation.AddRelationsTo(queue, 1, programmer1);
+            degreesOfSeparation.AddRelationsTo(queue, 1, programmer1, new List<Tuple<int, IProgrammer>>());
 
             var expectedQueue = new Queue<Tuple<int, IProgrammer>>();
             expectedQueue.Enqueue(new Tuple<int, IProgrammer>(1, programmer2));
@@ -37,7 +37,7 @@ namespace Tests
             var degreesOfSeparation = new DegreesOfSeparation();
             var queue = new Queue<Tuple<int, IProgrammer>>();
 
-            degreesOfSeparation.AddRelationsTo(queue, 1, programmer2);
+            degreesOfSeparation.AddRelationsTo(queue, 1, programmer2, new List<Tuple<int, IProgrammer>>());
 
             var expectedQueue = new Queue<Tuple<int, IProgrammer>>();
             expectedQueue.Enqueue(new Tuple<int, IProgrammer>(1, programmer1));
@@ -59,7 +59,7 @@ namespace Tests
             queue.Enqueue(new Tuple<int, IProgrammer>(1, programmerAlreadyInQueue));
 
             var degreesOfSeparation = new DegreesOfSeparation();
-            degreesOfSeparation.AddRelationsTo(queue, 2, programmer1);
+            degreesOfSeparation.AddRelationsTo(queue, 2, programmer1 , new List<Tuple<int, IProgrammer>>());
 
             var expectedQueue = new Queue<Tuple<int, IProgrammer>>();
             expectedQueue.Enqueue(new Tuple<int, IProgrammer>(1, programmerAlreadyInQueue));
