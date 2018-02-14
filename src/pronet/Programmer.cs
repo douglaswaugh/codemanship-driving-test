@@ -62,5 +62,10 @@ namespace ProNet
         {
             return WasRecommendedBy(programmer) || HasRecommended(programmer);
         }
+
+        public override string ToString()
+        {
+            return _name;
+        }
     }
 }

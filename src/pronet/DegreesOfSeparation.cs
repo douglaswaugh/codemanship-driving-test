@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ProNet
 {
@@ -20,12 +21,14 @@ namespace ProNet
             return programmerToProcess.Item2.IsRelatedTo(programmer);
         }
 
-        private void AddRelationsTo(Queue<Tuple<int, IProgrammer>> queue, int degreeOfSeparation, IProgrammer processed)
+        public void AddRelationsTo(Queue<Tuple<int, IProgrammer>> queue, int degreeOfSeparation, IProgrammer processed)
         {
             foreach (var relation in processed.Relations)
             {
-                if (processed != relation)
+                if (processed != relation && !queue.Any(tuple => tuple.Item2.Name == relation.Name))
+                {
                     queue.Enqueue(new Tuple<int, IProgrammer>(degreeOfSeparation, relation));
+                }
             }
         }
 
