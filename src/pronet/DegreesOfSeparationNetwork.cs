@@ -25,7 +25,7 @@ namespace ProNet
             return network;
         }
 
-        public void AddRelationsTo(IProgrammer programmerFrom, Queue<Tuple<int, IProgrammer>> queue, int degreeOfSeparation, IProgrammer processed, List<Tuple<int, IProgrammer>> network)
+        private void AddRelationsTo(IProgrammer programmerFrom, Queue<Tuple<int, IProgrammer>> queue, int degreeOfSeparation, IProgrammer processed, List<Tuple<int, IProgrammer>> network)
         {
             foreach (var relation in processed.Relations)
             {
