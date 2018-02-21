@@ -28,17 +28,6 @@ namespace ProNet
             return programmerToProcess.Item2.IsRelatedTo(programmer);
         }
 
-        public void AddRelationsTo(Queue<Tuple<int, IProgrammer>> queue, int degreeOfSeparation, IProgrammer processed, List<Tuple<int, IProgrammer>> network)
-        {
-            foreach (var relation in processed.Relations)
-            {
-                if (processed != relation && !queue.Any(tuple => tuple.Item2.Name == relation.Name) && !network.Any(tuple => tuple.Item2.Name == relation.Name))
-                {
-                    queue.Enqueue(new Tuple<int, IProgrammer>(degreeOfSeparation, relation));
-                }
-            }
-        }
-
         private int FindDegrees(IProgrammer programmer, List<Tuple<int, IProgrammer>> toProcess)
         {
             foreach (var networkProgrammer in toProcess)
