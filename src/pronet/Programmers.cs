@@ -3,12 +3,12 @@ using System.Linq;
 
 namespace ProNet
 {
-    public class Programmers : IProgrammers
+    public class Network : IProgrammers
     {
         public readonly IEnumerable<IProgrammer> _programmers;
         private DegreesOfSeparation _degreesOfSeparation;
 
-        public Programmers(IEnumerable<IProgrammer> programmers)
+        public Network(IEnumerable<IProgrammer> programmers)
         {
             _programmers = programmers;
             _degreesOfSeparation = new DegreesOfSeparation();

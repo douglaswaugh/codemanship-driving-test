@@ -15,7 +15,7 @@ namespace ProNet
 
         public IProgrammers BuildProgrammers(IReadOnlyDictionary<string, IEnumerable<string>> recommendations, IReadOnlyDictionary<string, IEnumerable<string>> skills)
         {
-            return new Programmers(_programmerFactory.BuildProgrammers(recommendations, skills));
+            return new Network(_programmerFactory.BuildProgrammers(recommendations, skills));
         }
     }
 }
