@@ -67,5 +67,18 @@ namespace ProNet
         {
             return _name;
         }
+
+        public override bool Equals(object that)
+        {
+            if (((IProgrammer)that).Name == this.Name)
+                return true;
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return Name.GetHashCode();
+        }
     }
 }
