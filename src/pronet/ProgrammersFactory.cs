@@ -19,27 +19,30 @@ namespace ProNet
                 .Select(programmer => _programmerFactory.BuildProgrammer(programmer.Key, programmer.Value))
                 .ToList(); // required so BuildProgrammer is not called every time a Programmer is accessed inside Programmers
 
-            var programmers = new Programmers(listOfProgrammers);
-
-            return AddRecommendations(programmers, recommendations);
+            return new Programmers(AddRecommendations(listOfProgrammers, recommendations).ToList());
         }
 
-        private IProgrammers AddRecommendations(IProgrammers programmers, IReadOnlyDictionary<string, IEnumerable<string>> recommendations)
+        private IEnumerable<IProgrammer> AddRecommendations(IEnumerable<IProgrammer> programmers, IReadOnlyDictionary<string, IEnumerable<string>> recommendations)
         {
             foreach (var recommender in recommendations)
             {
-                AddRecommendations(programmers, recommender.Key, recommendations[recommender.Key]);
+                AddRecommendations(programmers, GetProgrammerByName(programmers, recommender.Key), recommendations[recommender.Key]);
             }
 
             return programmers;
         }
 
-        private static void AddRecommendations(IProgrammers programmers, string recommender, IEnumerable<string> recommendations)
+        private void AddRecommendations(IEnumerable<IProgrammer> programmers, IProgrammer recommender, IEnumerable<string> recommendations)
         {
             foreach (var recommendation in recommendations)
             {
-                programmers.AddRecommendation(recommender, recommendation);
+                recommender.Recommends(GetProgrammerByName(programmers, recommendation));
             }
+        }
+
+        private IProgrammer GetProgrammerByName(IEnumerable<IProgrammer> programmers, string name)
+        {
+            return programmers.Single(programmer => programmer.Name == name);
         }
     }
 }

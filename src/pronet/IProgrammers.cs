@@ -1,7 +1,13 @@
-﻿namespace ProNet
+﻿using System.Collections.Generic;
+
+namespace ProNet
 {
-    public interface IProgrammers : IRankedProgrammers
+    public interface IProgrammers
     {
-        void AddRecommendation(string recommender, string recommendation);
+        void Calculate();
+        decimal RankFor(string name);
+        IEnumerable<string> RecommendationsFor(string name);
+        IEnumerable<string> Skills(string programmer);
+        int DegreesOfSeparation(string programmer1, string programmer2);
     }
 }
