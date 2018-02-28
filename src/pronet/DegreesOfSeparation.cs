@@ -13,14 +13,14 @@ namespace ProNet
             _degreesOfSeparationNetwork = new DegreesOfSeparationNetwork();
         }
 
-        public int Calculate(IProgrammer programmerFrom, IProgrammer programmer)
+        public int Calculate(IProgrammer programmerFrom, IProgrammer programmerTo)
         {
-            if (programmerFrom == programmer)
+            if (programmerFrom == programmerTo)
                 return 0;
             
-            var toProcess = _degreesOfSeparationNetwork.BuildNetwork(programmerFrom);
+            var network = _degreesOfSeparationNetwork.BuildNetwork(programmerFrom);
 
-            return FindDegrees(programmer, toProcess);
+            return FindDegrees(programmerTo, network);
         }
 
         private bool AreRelated(Tuple<int, IProgrammer> programmerToProcess, IProgrammer programmer)
@@ -28,11 +28,11 @@ namespace ProNet
             return programmerToProcess.Item2.IsRelatedTo(programmer);
         }
 
-        private int FindDegrees(IProgrammer programmer, List<Tuple<int, IProgrammer>> toProcess)
+        private int FindDegrees(IProgrammer programmerTo, List<Tuple<int, IProgrammer>> network)
         {
-            foreach (var networkProgrammer in toProcess)
+            foreach (var networkProgrammer in network)
             {
-                if (networkProgrammer.Item2.Equals(programmer))
+                if (networkProgrammer.Item2.Equals(programmerTo))
                     return networkProgrammer.Item1;
             }
 
