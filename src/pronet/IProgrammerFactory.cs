@@ -4,6 +4,6 @@ namespace ProNet
 {
     public interface IProgrammerFactory
     {
-        IProgrammer BuildProgrammer(string name, IEnumerable<string> skills);
+        IEnumerable<IProgrammer> BuildProgrammers(IReadOnlyDictionary<string, IEnumerable<string>> recommendations, IReadOnlyDictionary<string, IEnumerable<string>> skills);
     }
 }

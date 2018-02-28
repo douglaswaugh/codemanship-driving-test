@@ -8,7 +8,7 @@ namespace ProNet
         public readonly IEnumerable<IProgrammer> _programmers;
         private DegreesOfSeparation _degreesOfSeparation;
 
-        public Programmers(List<IProgrammer> programmers)
+        public Programmers(IEnumerable<IProgrammer> programmers)
         {
             _programmers = programmers;
             _degreesOfSeparation = new DegreesOfSeparation();
