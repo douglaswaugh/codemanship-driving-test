@@ -23,11 +23,6 @@ namespace ProNet
             return FindDegrees(programmerTo, network);
         }
 
-        private bool AreRelated(Tuple<int, IProgrammer> programmerToProcess, IProgrammer programmer)
-        {
-            return programmerToProcess.Item2.IsRelatedTo(programmer);
-        }
-
         private int FindDegrees(IProgrammer programmerTo, List<Tuple<int, IProgrammer>> network)
         {
             foreach (var networkProgrammer in network)
