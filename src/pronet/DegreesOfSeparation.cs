@@ -32,7 +32,7 @@ namespace ProNet
         {
             foreach (var networkProgrammer in toProcess)
             {
-                if (AreRelated(networkProgrammer, programmer))
+                if (networkProgrammer.Item2.Equals(programmer))
                     return networkProgrammer.Item1;
             }
 
