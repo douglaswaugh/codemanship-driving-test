@@ -1,7 +1,7 @@
 ﻿namespace ProNet
 {
-    public interface IProgrammersStore
+    public interface INetworkStore
     {
-        IProgrammers GetAll();
+        INetwork GetNetwork();
     }
 }

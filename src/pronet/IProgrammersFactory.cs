@@ -2,8 +2,8 @@
 
 namespace ProNet
 {
-    public interface IProgrammersFactory
+    public interface INetworkFactory
     {
-        IProgrammers BuildProgrammers(IReadOnlyDictionary<string, IEnumerable<string>> recommendations, IReadOnlyDictionary<string, IEnumerable<string>> skills);
+        INetwork BuildNetwork(IReadOnlyDictionary<string, IEnumerable<string>> recommendations, IReadOnlyDictionary<string, IEnumerable<string>> skills);
     }
 }

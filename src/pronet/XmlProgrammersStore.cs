@@ -4,20 +4,20 @@ using System.Xml.Linq;
 
 namespace ProNet
 {
-    public class XmlProgrammersStore : IProgrammersStore
+    public class XmlNetworkStore : INetworkStore
     {
         private readonly IXmlLoader _xmlLoader;
-        private readonly IProgrammersFactory _programmersFactory;
+        private readonly INetworkFactory _networkFactory;
 
-        public XmlProgrammersStore(IXmlLoader xmlLoader, IProgrammersFactory programmersFactory)
+        public XmlNetworkStore(IXmlLoader xmlLoader, INetworkFactory networkFactory)
         {
             _xmlLoader = xmlLoader;
-            _programmersFactory = programmersFactory;
+            _networkFactory = networkFactory;
         }
 
-        public IProgrammers GetAll()
+        public INetwork GetNetwork()
         {
-            return _programmersFactory.BuildProgrammers(GetRecommendations(), GetSkills());
+            return _networkFactory.BuildNetwork(GetRecommendations(), GetSkills());
         }
 
         private IReadOnlyDictionary<string, IEnumerable<string>> GetRecommendations()

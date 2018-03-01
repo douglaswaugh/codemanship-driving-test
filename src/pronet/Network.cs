@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace ProNet
 {
-    public class Network : IProgrammers
+    public class Network : INetwork
     {
         public readonly IEnumerable<IProgrammer> _programmers;
         private DegreesOfSeparation _degreesOfSeparation;

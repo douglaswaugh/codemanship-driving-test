@@ -5,32 +5,32 @@ namespace ProNet
 {
     public class ProNet : IProNet
     {
-        private readonly IProgrammers _programmers;
+        private readonly INetwork _network;
 
-        public ProNet(IProgrammersStore programmersStore)
+        public ProNet(INetworkStore networkStore)
         {
-            _programmers = programmersStore.GetAll();
-            _programmers.Calculate();
+            _network = networkStore.GetNetwork();
+            _network.Calculate();
         }
 
         public string[] Skills(string programmer)
         {
-            return _programmers.Skills(programmer).ToArray();
+            return _network.Skills(programmer).ToArray();
         }
 
         public string[] Recommendations(string programmer)
         {
-            return _programmers.RecommendationsFor(programmer).ToArray();
+            return _network.RecommendationsFor(programmer).ToArray();
         }
 
         public double Rank(string programmer)
         {
-            return Convert.ToDouble(_programmers.RankFor(programmer));
+            return Convert.ToDouble(_network.RankFor(programmer));
         }
 
         public int DegreesOfSeparation(string programmer1, string programmer2)
         {
-            return _programmers.DegreesOfSeparation(programmer1, programmer2);
+            return _network.DegreesOfSeparation(programmer1, programmer2);
         }
 
         public double TeamStrength(string language, string[] team)

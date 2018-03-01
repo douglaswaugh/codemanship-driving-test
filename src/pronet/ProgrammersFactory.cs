@@ -4,16 +4,16 @@ using System.Linq;
 
 namespace ProNet
 {
-    public class ProgrammersFactory : IProgrammersFactory
+    public class NetworkFactory : INetworkFactory
     {
         private readonly IProgrammerFactory _programmerFactory;
 
-        public ProgrammersFactory(IProgrammerFactory programmerFactory)
+        public NetworkFactory(IProgrammerFactory programmerFactory)
         {
             _programmerFactory = programmerFactory;
         }
 
-        public IProgrammers BuildProgrammers(IReadOnlyDictionary<string, IEnumerable<string>> recommendations, IReadOnlyDictionary<string, IEnumerable<string>> skills)
+        public INetwork BuildNetwork(IReadOnlyDictionary<string, IEnumerable<string>> recommendations, IReadOnlyDictionary<string, IEnumerable<string>> skills)
         {
             return new Network(_programmerFactory.BuildProgrammers(recommendations, skills));
         }

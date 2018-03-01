@@ -5,14 +5,14 @@ using System.Xml.Linq;
 namespace ProNet.Test.Unit
 {
     [TestFixture]
-    public class XmlProgrammersStoreTests
+    public class XmlNetworkStoreTests
     {
         [Test]
         public void Programmer_should_have_a_rank_of_zero_when_first_built()
         {
-            var programmersStore = new XmlProgrammersStore(new HardCodedXmlLoader(), new ProgrammersFactory(new ProgrammerFactory()));
-            var programmers = programmersStore.GetAll();
-            Assert.That(programmers.RankFor("Nick"), Is.EqualTo(0));
+            var networkStore = new XmlNetworkStore(new HardCodedXmlLoader(), new NetworkFactory(new ProgrammerFactory()));
+            var network = networkStore.GetNetwork();
+            Assert.That(network.RankFor("Nick"), Is.EqualTo(0));
         }
 
         [Test]
@@ -38,9 +38,9 @@ namespace ProNet.Test.Unit
                         <Programmer name='Rick'></Programmer>
                     </Network>".Trim()));
 
-            var programmersStore = new XmlProgrammersStore(new HardCodedXmlLoader(), new ProgrammersFactory(new ProgrammerFactory()));
-            var programmers = programmersStore.GetAll();
-            Assert.That(programmers.RecommendationsFor("Ed"), Is.EquivalentTo(new string[] {"Liz", "Rick", "Bill"}));
+            var networkStore = new XmlNetworkStore(new HardCodedXmlLoader(), new NetworkFactory(new ProgrammerFactory()));
+            var network = networkStore.GetNetwork();
+            Assert.That(network.RecommendationsFor("Ed"), Is.EquivalentTo(new string[] {"Liz", "Rick", "Bill"}));
         }
     }
 }
