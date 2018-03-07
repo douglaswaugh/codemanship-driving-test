@@ -19,10 +19,6 @@ namespace ProNet
             _skills = skills;
         }
 
-        public decimal Rank
-        {
-            set => _rank = value;
-        }
         public string Name => _name;
         public decimal ProgrammerRankShare => _rank / _recommendations.Count;
         public IEnumerable<IProgrammer> Relations => _recommendations.Concat(_recommendedBys);
@@ -42,7 +38,7 @@ namespace ProNet
         public void UpdateRank()
         {
             // (1 - d) + d(PR(T1)/C(T1)) + ... + d(PR(Tn)/C(Tn))
-            Rank = _recommendedBys
+            _rank = _recommendedBys
                 .Aggregate(1m - 0.85m, (current, programmer) => current + 0.85m * programmer.ProgrammerRankShare);
         }
 
