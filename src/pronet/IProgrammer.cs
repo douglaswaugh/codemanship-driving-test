@@ -6,10 +6,10 @@ namespace ProNet
     {
         string Name { get; }
         IEnumerable<string> RecommendedProgrammers { get; }
-        IEnumerable<string> Skills { get; }
         decimal Rank { get; }
         decimal ProgrammerRankShare { get; }
         IEnumerable<IProgrammer> Relations { get; }
+        ProgrammerDto Details { get; }
 
         void UpdateRank();
         void Recommends(IProgrammer programmer);

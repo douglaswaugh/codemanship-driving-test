@@ -31,9 +31,9 @@ namespace ProNet
             return GetByName(name).RecommendedProgrammers;
         }
 
-        public IEnumerable<string> Skills(string programmer)
+        public ProgrammerDto GetDetailsFor(string name)
         {
-            return GetByName(programmer).Skills;
+            return GetByName(name).Details;
         }
 
         public int DegreesOfSeparation(string programmer1, string programmer2)

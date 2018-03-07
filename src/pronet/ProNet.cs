@@ -15,7 +15,7 @@ namespace ProNet
 
         public string[] Skills(string programmer)
         {
-            return _network.Skills(programmer).ToArray();
+            return _network.GetDetailsFor(programmer).Skills.ToArray();
         }
 
         public string[] Recommendations(string programmer)
