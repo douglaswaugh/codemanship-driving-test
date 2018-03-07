@@ -20,7 +20,7 @@ namespace ProNet
 
         public string[] Recommendations(string programmer)
         {
-            return _network.RecommendationsFor(programmer).ToArray();
+            return _network.GetDetailsFor(programmer).Recommendations.ToArray();
         }
 
         public double Rank(string programmer)

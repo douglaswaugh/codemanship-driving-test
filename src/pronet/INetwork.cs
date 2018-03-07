@@ -6,7 +6,6 @@ namespace ProNet
     {
         void Calculate();
         decimal RankFor(string name);
-        IEnumerable<string> RecommendationsFor(string name);
         int DegreesOfSeparation(string programmer1, string programmer2);
         ProgrammerDto GetDetailsFor(string name);
     }

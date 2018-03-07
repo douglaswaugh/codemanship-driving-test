@@ -40,7 +40,7 @@ namespace ProNet.Test.Unit
 
             var networkStore = new XmlNetworkStore(new HardCodedXmlLoader(), new NetworkFactory(new ProgrammerFactory()));
             var network = networkStore.GetNetwork();
-            Assert.That(network.RecommendationsFor("Ed"), Is.EquivalentTo(new string[] {"Liz", "Rick", "Bill"}));
+            Assert.That(network.GetDetailsFor("Ed").Recommendations, Is.EquivalentTo(new string[] {"Liz", "Rick", "Bill"}));
         }
     }
 }

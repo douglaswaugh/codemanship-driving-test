@@ -26,11 +26,6 @@ namespace ProNet
             return GetByName(name).Rank;
         }
 
-        public IEnumerable<string> RecommendationsFor(string name)
-        {
-            return GetByName(name).RecommendedProgrammers;
-        }
-
         public ProgrammerDto GetDetailsFor(string name)
         {
             return GetByName(name).Details;
@@ -51,7 +46,7 @@ namespace ProNet
             var totalRank = 0m;
             foreach (var programmer in _programmers)
             {
-                totalRank += programmer.Rank;
+                totalRank += programmer.Details.Rank;
             }
             return totalRank / _programmers.Count();
         }

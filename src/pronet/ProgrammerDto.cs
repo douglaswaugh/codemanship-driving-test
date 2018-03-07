@@ -6,20 +6,20 @@ namespace ProNet
     {
         private string _name;
         private decimal _rank;
-        private IEnumerable<string> _recommendedProgrammers;
+        private IEnumerable<string> _recommendations;
         private IEnumerable<string> _skills;
 
-        public ProgrammerDto(string name, decimal rank, IEnumerable<string> recommendedProgrammers, IEnumerable<string> skills)
+        public ProgrammerDto(string name, decimal rank, IEnumerable<string> recommendations, IEnumerable<string> skills)
         {
             _name = name;
             _rank = rank;
-            _recommendedProgrammers = recommendedProgrammers;
+            _recommendations = recommendations;
             _skills = skills;
         }
 
         public string Name => _name;
         public decimal Rank => _rank;
-        public IEnumerable<string> RecommendedProgrammers => _recommendedProgrammers;
+        public IEnumerable<string> Recommendations => _recommendations;
         public IEnumerable<string> Skills => _skills;
     }
 }
