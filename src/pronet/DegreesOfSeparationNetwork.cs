@@ -30,7 +30,7 @@ namespace ProNet
         {
             foreach (var relation in processed.Relations)
             {
-                if (processed != relation && programmerFrom != relation && !queue.Any(tuple => tuple.Item2.Name == relation.Name) && !network.Any(tuple => tuple.Item2.Name == relation.Name))
+                if (processed != relation && programmerFrom != relation && !queue.Any(tuple => tuple.Item2.Equals(relation)) && !network.Any(tuple => tuple.Item2.Equals(relation)))
                 {
                     queue.Enqueue(new Tuple<int, IProgrammer>(degreeOfSeparation, relation));
                 }
