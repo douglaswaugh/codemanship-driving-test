@@ -7,14 +7,14 @@ namespace ProNet
     {
         private readonly string _name;
         private decimal _rank;
-        private readonly ICollection<IProgrammer> _recommendations;
-        private readonly ICollection<IProgrammer> _recommendedBys;
+        private readonly ICollection<Programmer> _recommendations;
+        private readonly ICollection<Programmer> _recommendedBys;
         private readonly IEnumerable<string> _skills;
 
         public Programmer(string name, IEnumerable<string> skills)
         {
-            _recommendations = new List<IProgrammer>();
-            _recommendedBys = new List<IProgrammer>();
+            _recommendations = new List<Programmer>();
+            _recommendedBys = new List<Programmer>();
             _name = name;
             _skills = skills;
         }
@@ -30,13 +30,13 @@ namespace ProNet
         public IEnumerable<IProgrammer> Relations => _recommendations.Concat(_recommendedBys);
         public ProgrammerDto Details => new ProgrammerDto(_name, _rank, _recommendations.Select(programmer => programmer.Name), _skills);
 
-        public void Recommends(IProgrammer programmer)
+        public void Recommends(Programmer programmer)
         {
             _recommendations.Add(programmer);
             programmer.RecommendedBy(this);
         }
 
-        public void RecommendedBy(IProgrammer programmer)
+        private void RecommendedBy(Programmer programmer)
         {
             _recommendedBys.Add(programmer);
         }
@@ -55,7 +55,7 @@ namespace ProNet
 
         public override bool Equals(object that)
         {
-            if (((IProgrammer)that).Name == this.Name)
+            if (((Programmer)that).Name == this.Name)
                 return true;
 
             return false;

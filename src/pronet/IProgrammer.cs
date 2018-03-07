@@ -12,7 +12,6 @@ namespace ProNet
         ProgrammerDto Details { get; }
 
         void UpdateRank();
-        void Recommends(IProgrammer programmer);
-        void RecommendedBy(IProgrammer programmer);
+        void Recommends(Programmer programmer);
     }
 }

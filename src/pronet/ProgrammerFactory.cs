@@ -12,19 +12,19 @@ namespace ProNet
             return AddRecommendations(listOfProgrammers, recommendations);
         }
 
-        private List<IProgrammer> BuildProgrammersWithSkills(IReadOnlyDictionary<string, IEnumerable<string>> skills)
+        private List<Programmer> BuildProgrammersWithSkills(IReadOnlyDictionary<string, IEnumerable<string>> skills)
         {
             return skills
                 .Select(programmer => BuildProgrammer(programmer.Key, programmer.Value))
                 .ToList(); // required so BuildProgrammer is not called every time a Programmer is accessed inside Programmers
         }
 
-        private IProgrammer BuildProgrammer(string name, IEnumerable<string> skills)
+        private Programmer BuildProgrammer(string name, IEnumerable<string> skills)
         {
             return new Programmer(name, skills);
         }
 
-        private IEnumerable<IProgrammer> AddRecommendations(IEnumerable<IProgrammer> programmers, IReadOnlyDictionary<string, IEnumerable<string>> recommendations)
+        private IEnumerable<Programmer> AddRecommendations(IEnumerable<Programmer> programmers, IReadOnlyDictionary<string, IEnumerable<string>> recommendations)
         {
             foreach (var recommender in recommendations)
             {
@@ -34,7 +34,7 @@ namespace ProNet
             return programmers;
         }
 
-        private void AddRecommendations(IEnumerable<IProgrammer> programmers, IProgrammer recommender, IEnumerable<string> recommendations)
+        private void AddRecommendations(IEnumerable<Programmer> programmers, Programmer recommender, IEnumerable<string> recommendations)
         {
             foreach (var recommendation in recommendations)
             {
@@ -42,7 +42,7 @@ namespace ProNet
             }
         }
 
-        private IProgrammer GetProgrammerByName(IEnumerable<IProgrammer> programmers, string name)
+        private Programmer GetProgrammerByName(IEnumerable<Programmer> programmers, string name)
         {
             return programmers.Single(programmer => programmer.Name == name);
         }

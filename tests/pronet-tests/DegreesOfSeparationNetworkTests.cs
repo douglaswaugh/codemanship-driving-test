@@ -195,7 +195,7 @@ namespace Tests
             Assert.That(queue, Is.EquivalentTo(expectedQueue));
         }
 
-        private IProgrammer BuildProgrammer(string name)
+        private Programmer BuildProgrammer(string name)
         {
             return new Programmer(name, new string[]{});
         }
