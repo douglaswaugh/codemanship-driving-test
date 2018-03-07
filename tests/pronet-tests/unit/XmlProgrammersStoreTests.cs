@@ -12,7 +12,7 @@ namespace ProNet.Test.Unit
         {
             var networkStore = new XmlNetworkStore(new HardCodedXmlLoader(), new NetworkFactory(new ProgrammerFactory()));
             var network = networkStore.GetNetwork();
-            Assert.That(network.RankFor("Nick"), Is.EqualTo(0));
+            Assert.That(network.GetDetailsFor("Nick").Rank, Is.EqualTo(0));
         }
 
         [Test]

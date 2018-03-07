@@ -21,11 +21,6 @@ namespace ProNet
             while (1 - AverageRank() >= 0.000001m);
         }
 
-        public decimal RankFor(string name)
-        {
-            return GetByName(name).Rank;
-        }
-
         public ProgrammerDto GetDetailsFor(string name)
         {
             return GetByName(name).Details;

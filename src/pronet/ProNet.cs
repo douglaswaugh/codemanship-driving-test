@@ -25,7 +25,7 @@ namespace ProNet
 
         public double Rank(string programmer)
         {
-            return Convert.ToDouble(_network.RankFor(programmer));
+            return Convert.ToDouble(_network.GetDetailsFor(programmer).Rank);
         }
 
         public int DegreesOfSeparation(string programmer1, string programmer2)

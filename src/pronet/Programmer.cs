@@ -21,11 +21,10 @@ namespace ProNet
 
         public decimal Rank
         {
-            get => _rank;
             set => _rank = value;
         }
         public string Name => _name;
-        public decimal ProgrammerRankShare => Rank / _recommendations.Count;
+        public decimal ProgrammerRankShare => _rank / _recommendations.Count;
         public IEnumerable<IProgrammer> Relations => _recommendations.Concat(_recommendedBys);
         public ProgrammerDto Details => new ProgrammerDto(_name, _rank, _recommendations.Select(programmer => programmer.Name), _skills);
 
