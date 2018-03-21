@@ -33,7 +33,7 @@ namespace ProNet
 
         private IProgrammer GetByName(string name)
         {
-            return _programmers.Single(programmer => programmer.Name == name);
+            return _programmers.Single(programmer => programmer.IsNamed(name));
         }
 
         private decimal AverageRank()

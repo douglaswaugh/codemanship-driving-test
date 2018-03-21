@@ -19,10 +19,15 @@ namespace ProNet
             _skills = skills;
         }
 
-        public string Name => _name;
+        private string Name => _name;
         private decimal ProgrammerRankShare => _rank / _recommendations.Count;
         public IEnumerable<IProgrammer> Relations => _recommendations.Concat(_recommendedBys);
-        public ProgrammerDto Details => new ProgrammerDto(_name, _rank, _recommendations.Select(programmer => programmer.Name), _skills);
+        public ProgrammerDto Details => new ProgrammerDto(Name, _rank, _recommendations.Select(programmer => programmer.Name), _skills);
+
+        public bool IsNamed(string name)
+        {
+            return Name.Equals(name);
+        }
 
         public void Recommends(Programmer programmer)
         {
@@ -44,7 +49,7 @@ namespace ProNet
 
         public override string ToString()
         {
-            return _name;
+            return Name;
         }
 
         public override bool Equals(object that)

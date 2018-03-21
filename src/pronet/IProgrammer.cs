@@ -3,11 +3,11 @@
 namespace ProNet
 {
     public interface IProgrammer
-    {
-        string Name { get; }
+    { 
         IEnumerable<IProgrammer> Relations { get; }
         ProgrammerDto Details { get; }
 
+        bool IsNamed(string name);
         void UpdateRank();
         void Recommends(Programmer programmer);
     }

@@ -44,7 +44,7 @@ namespace ProNet
 
         private Programmer GetProgrammerByName(IEnumerable<Programmer> programmers, string name)
         {
-            return programmers.Single(programmer => programmer.Name == name);
+            return programmers.Single(programmer => programmer.IsNamed(name));
         }
     }
 }

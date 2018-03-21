@@ -23,7 +23,7 @@ namespace ProNet.Test.Unit
                 {"programmer3", new List<string>()}
             };
             var programmers = programmerFactory.BuildProgrammers(recommendations, skills);
-            var programmer = programmers.Single(p => p.Name == "programmer1");
+            var programmer = programmers.Single(p => p.IsNamed("programmer1"));
             Assert.That(programmer.Relations, Is.EquivalentTo(new IProgrammer[] { new Programmer("programmer2", new string[]{}), new Programmer("programmer3", new string[]{})}));
         }
     }
