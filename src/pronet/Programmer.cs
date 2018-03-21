@@ -19,8 +19,6 @@ namespace ProNet
             _skills = skills;
         }
 
-        private string Name => _name;
-        private decimal ProgrammerRankShare => _rank / _recommendations.Count;
         public IEnumerable<IProgrammer> Relations => _recommendations.Concat(_recommendedBys);
         public ProgrammerDto Details => new ProgrammerDto(Name, _rank, _recommendations.Select(programmer => programmer.Name), _skills);
 
@@ -35,16 +33,20 @@ namespace ProNet
             programmer.RecommendedBy(this);
         }
 
-        private void RecommendedBy(Programmer programmer)
-        {
-            _recommendedBys.Add(programmer);
-        }
-
         public void UpdateRank()
         {
             // (1 - d) + d(PR(T1)/C(T1)) + ... + d(PR(Tn)/C(Tn))
             _rank = _recommendedBys
                 .Aggregate(1m - 0.85m, (current, programmer) => current + 0.85m * programmer.ProgrammerRankShare);
+        }
+
+        private string Name => _name;
+
+        private decimal ProgrammerRankShare => _rank / _recommendations.Count;
+
+        private void RecommendedBy(Programmer programmer)
+        {
+            _recommendedBys.Add(programmer);
         }
 
         public override string ToString()
