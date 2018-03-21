@@ -20,6 +20,7 @@ namespace ProNet
         }
 
         public IEnumerable<IProgrammer> Relations => _recommendations.Concat(_recommendedBys);
+
         public ProgrammerDto Details => new ProgrammerDto(Name, _rank, _recommendations.Select(programmer => programmer.Name), _skills);
 
         public bool IsNamed(string name)
