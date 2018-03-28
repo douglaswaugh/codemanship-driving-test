@@ -31,10 +31,7 @@ namespace ProNet
             return network.Single(tuple => tuple.Item2.Equals(programmerTo)).Item1;
         }
 
-        public bool IsNamed(string name)
-        {
-            return Name.Equals(name);
-        }
+        public bool IsNamed(string name) => Name.Equals(name);
 
         public void Recommends(Programmer programmer)
         {
