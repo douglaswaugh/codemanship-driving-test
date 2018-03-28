@@ -3,7 +3,7 @@ using NUnit.Framework;
 namespace ProNet.Test.Unit
 {
     [TestFixture]
-    public class DegreesOfSeparationTests
+    public class ProgrammerTests
     {
         [Test]
         public void Should_calculate_degrees_of_separation_between_developer_and_itself_is_0()
