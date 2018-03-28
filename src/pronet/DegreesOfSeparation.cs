@@ -7,6 +7,13 @@ namespace ProNet
     // TODO: This could probably do with being refactored a bit
     public class DegreesOfSeparation
     {
+        public int Between(IProgrammer programmerFrom, IProgrammer programmerTo)
+        {
+            var network = BuildNetwork(programmerFrom);
+
+            return network.Single(tuple => tuple.Item2.Equals(programmerTo)).Item1;
+        }
+
         public List<Tuple<int, IProgrammer>> BuildNetwork(IProgrammer programmerFrom)
         {
             return BuildNetwork(InitialiseQueue(programmerFrom), InitialiseNetwork());

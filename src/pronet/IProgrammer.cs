@@ -11,6 +11,5 @@ namespace ProNet
         void UpdateRank();
         void Recommends(Programmer programmer);
         void AddRelationsTo(Queue<Tuple<int, IProgrammer>> queue, int degreeOfSeparation);
-        int SeparatedByDegreesFrom(IProgrammer programmerTo);
     }
 }

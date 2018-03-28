@@ -8,9 +8,11 @@ namespace ProNet.Test.Unit
         [Test]
         public void Should_calculate_degrees_of_separation_between_developer_and_itself_is_0()
         {
-            var programmer1 = new Programmer("Programemr1", new string[]{}, new DegreesOfSeparation());
+            var programmer1 = new Programmer("Programemr1", new string[]{});
             
-            var degrees = programmer1.SeparatedByDegreesFrom(programmer1);
+            var degreesOfSeparation = new DegreesOfSeparation();
+
+            var degrees = degreesOfSeparation.Between(programmer1, programmer1);
 
             Assert.That(degrees, Is.EqualTo(0));
         }
@@ -18,11 +20,13 @@ namespace ProNet.Test.Unit
         [Test]
         public void Should_calculate_degrees_of_separation_between_developer_and_direct_relation_is_1()
         {
-            var programmer1 = new Programmer("Programemr1", new string[]{}, new DegreesOfSeparation());
-            var programmer2 = new Programmer("Programmer2", new string[]{}, new DegreesOfSeparation());
+            var programmer1 = new Programmer("Programemr1", new string[]{});
+            var programmer2 = new Programmer("Programmer2", new string[]{});
             programmer1.Recommends(programmer2);
 
-            var degrees = programmer1.SeparatedByDegreesFrom(programmer2);
+            var degreesOfSeparation = new DegreesOfSeparation();
+
+            var degrees = degreesOfSeparation.Between(programmer1, programmer2);
 
             Assert.That(degrees, Is.EqualTo(1));
         }

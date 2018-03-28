@@ -11,15 +11,13 @@ namespace ProNet
         private readonly ICollection<Programmer> _recommendations;
         private readonly ICollection<Programmer> _recommendedBys;
         private readonly IEnumerable<string> _skills;
-        private readonly DegreesOfSeparation _degreesOfSeparation;
 
-        public Programmer(string name, IEnumerable<string> skills, DegreesOfSeparation degreesOfSeparation)
+        public Programmer(string name, IEnumerable<string> skills)
         {
             _recommendations = new List<Programmer>();
             _recommendedBys = new List<Programmer>();
             _name = name;
             _skills = skills;
-            _degreesOfSeparation = degreesOfSeparation;
         }
 
         public ProgrammerDto Details => new ProgrammerDto(Name, _rank, _recommendations.Select(programmer => programmer.Name), _skills);
@@ -45,13 +43,6 @@ namespace ProNet
         }
 
         private decimal ProgrammerRankShare => _rank / _recommendations.Count;
-
-        public int SeparatedByDegreesFrom(IProgrammer programmerTo)
-        {
-            var network = _degreesOfSeparation.BuildNetwork(this);
-
-            return network.Single(tuple => tuple.Item2.Equals(programmerTo)).Item1;
-        }
 
         public void AddRelationsTo(Queue<Tuple<int, IProgrammer>> queue, int degreeOfSeparation)
         {
