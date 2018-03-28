@@ -22,8 +22,6 @@ namespace ProNet
             _degreesOfSeparationNetwork = degreesOfSeparationNetwork;
         }
 
-        public IEnumerable<IProgrammer> Relations => _recommendations.Concat(_recommendedBys);
-
         public ProgrammerDto Details => new ProgrammerDto(Name, _rank, _recommendations.Select(programmer => programmer.Name), _skills);
 
         public List<Tuple<int, IProgrammer>> BuildNetwork() => _degreesOfSeparationNetwork.BuildNetwork(this);
@@ -44,6 +42,14 @@ namespace ProNet
             // (1 - d) + d(PR(T1)/C(T1)) + ... + d(PR(Tn)/C(Tn))
             _rank = _recommendedBys
                 .Aggregate(1m - 0.85m, (current, programmer) => current + 0.85m * programmer.ProgrammerRankShare);
+        }
+
+        public void AddRelationsTo(Queue<Tuple<int, IProgrammer>> queue, int degreeOfSeparation)
+        {
+            foreach (var relation in _recommendations.Concat(_recommendedBys))
+            {
+                queue.Enqueue(new Tuple<int, IProgrammer>(degreeOfSeparation, relation));
+            }
         }
 
         private string Name => _name;

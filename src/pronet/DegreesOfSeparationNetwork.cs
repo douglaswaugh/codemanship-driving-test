@@ -18,23 +18,24 @@ namespace ProNet
             {
                 var programmerToProcess = toProcess.Dequeue();
 
-                network.Add(programmerToProcess);
-
-                AddRelationsTo(programmerToProcess.Item2, toProcess, network, programmerToProcess.Item1 + 1);
+                if (!NetworkContainsProgrammer(network, programmerToProcess))
+                {
+                    network.Add(programmerToProcess);
+                    AddRelationsTo(programmerToProcess.Item2, toProcess, network, programmerToProcess.Item1 + 1);
+                }
             }
 
             return network;
         }
 
+        private bool NetworkContainsProgrammer(List<Tuple<int, IProgrammer>> network, Tuple<int, IProgrammer> programmerToProcess)
+        {
+            return network.Any(tuple => tuple.Item2.Equals(programmerToProcess.Item2));
+        }
+
         private void AddRelationsTo(IProgrammer processed, Queue<Tuple<int, IProgrammer>> queue, List<Tuple<int, IProgrammer>> network, int degreeOfSeparation)
         {
-            foreach (var relation in processed.Relations)
-            {
-                if (!queue.Any(tuple => tuple.Item2.Equals(relation)) && !network.Any(tuple => tuple.Item2.Equals(relation)))
-                {
-                    queue.Enqueue(new Tuple<int, IProgrammer>(degreeOfSeparation, relation));
-                }
-            }
+            processed.AddRelationsTo(queue, degreeOfSeparation);
         }
     }
 }

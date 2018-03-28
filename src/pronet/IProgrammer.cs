@@ -5,12 +5,12 @@ namespace ProNet
 {
     public interface IProgrammer
     { 
-        IEnumerable<IProgrammer> Relations { get; }
         ProgrammerDto Details { get; }
 
         bool IsNamed(string name);
         void UpdateRank();
         void Recommends(Programmer programmer);
         List<Tuple<int, IProgrammer>> BuildNetwork();
+        void AddRelationsTo(Queue<Tuple<int, IProgrammer>> queue, int degreeOfSeparation);
     }
 }
