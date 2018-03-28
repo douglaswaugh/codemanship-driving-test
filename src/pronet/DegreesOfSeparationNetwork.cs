@@ -20,13 +20,13 @@ namespace ProNet
 
                 network.Add(programmerToProcess);
 
-                AddRelationsTo(toProcess, programmerToProcess.Item1 + 1, programmerToProcess.Item2, network);
+                AddRelationsTo(programmerToProcess.Item2, toProcess, network, programmerToProcess.Item1 + 1);
             }
 
             return network;
         }
 
-        private void AddRelationsTo(Queue<Tuple<int, IProgrammer>> queue, int degreeOfSeparation, IProgrammer processed, List<Tuple<int, IProgrammer>> network)
+        private void AddRelationsTo(IProgrammer processed, Queue<Tuple<int, IProgrammer>> queue, List<Tuple<int, IProgrammer>> network, int degreeOfSeparation)
         {
             foreach (var relation in processed.Relations)
             {
