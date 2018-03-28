@@ -12,8 +12,8 @@ namespace Tests
         {
             var degreesOfSeparation = new DegreesOfSeparationNetwork();
 
-            var programmer1 = new Programmer("Programmer1", new string[]{});
-            var programmer2 = new Programmer("Programmer2", new string[]{});
+            var programmer1 = BuildProgrammer("Programmer1");
+            var programmer2 = BuildProgrammer("Programmer2");
 
             programmer1.Recommends(programmer2);
 
@@ -28,8 +28,8 @@ namespace Tests
         [Test]
         public void Should_build_network_using_programmers_recommended_bys()
         {
-            var programmer1 = new Programmer("Programmer1", new string[]{});
-            var programmer2 = new Programmer("Programmer2", new string[]{});
+            var programmer1 = BuildProgrammer("Programmer1");
+            var programmer2 = BuildProgrammer("Programmer2");
             programmer1.Recommends(programmer2);
 
             var degreesOfSeparation = new DegreesOfSeparationNetwork();
@@ -44,9 +44,9 @@ namespace Tests
         [Test]
         public void Should_only_add_each_programmer_to_the_queue_once()
         {
-            var programmer1 = new Programmer("Programmer1", new string[]{});
-            var programmer2 = new Programmer("Programmer2", new string[]{});
-            var programmer3 = new Programmer("Programmer3", new string[]{});
+            var programmer1 = BuildProgrammer("Programmer1");
+            var programmer2 = BuildProgrammer("Programmer2");
+            var programmer3 = BuildProgrammer("Programmer3");
             programmer1.Recommends(programmer2);
             programmer1.Recommends(programmer3);
             programmer3.Recommends(programmer2);
@@ -64,9 +64,9 @@ namespace Tests
         [Test]
         public void Should_build_network_with_one_degree_of_separation()
         {
-            var programmer1 = new Programmer("Programmer1", new string[]{});
-            var programmer2 = new Programmer("Programmer2", new string[]{});
-            var programmer3 = new Programmer("Programmer3", new string[]{});
+            var programmer1 = BuildProgrammer("Programmer1");
+            var programmer2 = BuildProgrammer("Programmer2");
+            var programmer3 = BuildProgrammer("Programmer3");
             programmer1.Recommends(programmer2);
             programmer1.Recommends(programmer3);
 
@@ -197,7 +197,7 @@ namespace Tests
 
         private Programmer BuildProgrammer(string name)
         {
-            return new Programmer(name, new string[]{});
+            return new Programmer(name, new string[]{}, new DegreesOfSeparationNetwork());
         }
 
         private Tuple<int, IProgrammer> BuildTuple(int degreeOfSeparation, IProgrammer programmer)

@@ -18,7 +18,7 @@ namespace ProNet
             if (programmerFrom == programmerTo)
                 return 0;
             
-            var network = _degreesOfSeparationNetwork.BuildNetwork(programmerFrom);
+            var network = programmerFrom.BuildNetwork();
 
             return FindDegrees(programmerTo, network);
         }

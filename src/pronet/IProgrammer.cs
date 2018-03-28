@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ProNet
 {
@@ -10,5 +11,6 @@ namespace ProNet
         bool IsNamed(string name);
         void UpdateRank();
         void Recommends(Programmer programmer);
+        List<Tuple<int, IProgrammer>> BuildNetwork();
     }
 }

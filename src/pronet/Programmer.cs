@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ProNet
@@ -10,18 +11,22 @@ namespace ProNet
         private readonly ICollection<Programmer> _recommendations;
         private readonly ICollection<Programmer> _recommendedBys;
         private readonly IEnumerable<string> _skills;
+        private readonly DegreesOfSeparationNetwork _degreesOfSeparationNetwork;
 
-        public Programmer(string name, IEnumerable<string> skills)
+        public Programmer(string name, IEnumerable<string> skills, DegreesOfSeparationNetwork degreesOfSeparationNetwork)
         {
             _recommendations = new List<Programmer>();
             _recommendedBys = new List<Programmer>();
             _name = name;
             _skills = skills;
+            _degreesOfSeparationNetwork = degreesOfSeparationNetwork;
         }
 
         public IEnumerable<IProgrammer> Relations => _recommendations.Concat(_recommendedBys);
 
         public ProgrammerDto Details => new ProgrammerDto(Name, _rank, _recommendations.Select(programmer => programmer.Name), _skills);
+
+        public List<Tuple<int, IProgrammer>> BuildNetwork() => _degreesOfSeparationNetwork.BuildNetwork(this);
 
         public bool IsNamed(string name)
         {

@@ -24,7 +24,7 @@ namespace ProNet.Test.Unit
             };
             var programmers = programmerFactory.BuildProgrammers(recommendations, skills);
             var programmer = programmers.Single(p => p.IsNamed("programmer1"));
-            Assert.That(programmer.Relations, Is.EquivalentTo(new IProgrammer[] { new Programmer("programmer2", new string[]{}), new Programmer("programmer3", new string[]{})}));
+            Assert.That(programmer.Relations, Is.EquivalentTo(new IProgrammer[] { new Programmer("programmer2", new string[]{}, new DegreesOfSeparationNetwork()), new Programmer("programmer3", new string[]{}, new DegreesOfSeparationNetwork())}));
         }
     }
 }
