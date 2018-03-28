@@ -10,7 +10,7 @@ namespace ProNet
         bool IsNamed(string name);
         void UpdateRank();
         void Recommends(Programmer programmer);
-        List<Tuple<int, IProgrammer>> BuildNetwork();
         void AddRelationsTo(Queue<Tuple<int, IProgrammer>> queue, int degreeOfSeparation);
+        int SeparatedByDegreesFrom(IProgrammer programmerTo);
     }
 }

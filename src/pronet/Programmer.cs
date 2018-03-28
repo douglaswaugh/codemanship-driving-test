@@ -24,7 +24,12 @@ namespace ProNet
 
         public ProgrammerDto Details => new ProgrammerDto(Name, _rank, _recommendations.Select(programmer => programmer.Name), _skills);
 
-        public List<Tuple<int, IProgrammer>> BuildNetwork() => _degreesOfSeparationNetwork.BuildNetwork(this);
+        public int SeparatedByDegreesFrom(IProgrammer programmerTo)
+        {
+            var network = _degreesOfSeparationNetwork.BuildNetwork(this);
+
+            return network.Single(tuple => tuple.Item2.Equals(programmerTo)).Item1;
+        }
 
         public bool IsNamed(string name)
         {
