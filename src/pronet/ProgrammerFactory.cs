@@ -21,7 +21,7 @@ namespace ProNet
 
         private Programmer BuildProgrammer(string name, IEnumerable<string> skills)
         {
-            return new Programmer(name, skills, new DegreesOfSeparationNetwork());
+            return new Programmer(name, skills, new DegreesOfSeparation());
         }
 
         private IEnumerable<Programmer> AddRecommendations(IEnumerable<Programmer> programmers, IReadOnlyDictionary<string, IEnumerable<string>> recommendations)

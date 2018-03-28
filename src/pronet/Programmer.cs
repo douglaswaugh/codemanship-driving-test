@@ -11,15 +11,15 @@ namespace ProNet
         private readonly ICollection<Programmer> _recommendations;
         private readonly ICollection<Programmer> _recommendedBys;
         private readonly IEnumerable<string> _skills;
-        private readonly DegreesOfSeparationNetwork _degreesOfSeparationNetwork;
+        private readonly DegreesOfSeparation _degreesOfSeparation;
 
-        public Programmer(string name, IEnumerable<string> skills, DegreesOfSeparationNetwork degreesOfSeparationNetwork)
+        public Programmer(string name, IEnumerable<string> skills, DegreesOfSeparation degreesOfSeparation)
         {
             _recommendations = new List<Programmer>();
             _recommendedBys = new List<Programmer>();
             _name = name;
             _skills = skills;
-            _degreesOfSeparationNetwork = degreesOfSeparationNetwork;
+            _degreesOfSeparation = degreesOfSeparation;
         }
 
         public ProgrammerDto Details => new ProgrammerDto(Name, _rank, _recommendations.Select(programmer => programmer.Name), _skills);
@@ -48,7 +48,7 @@ namespace ProNet
 
         public int SeparatedByDegreesFrom(IProgrammer programmerTo)
         {
-            var network = _degreesOfSeparationNetwork.BuildNetwork(this);
+            var network = _degreesOfSeparation.BuildNetwork(this);
 
             return network.Single(tuple => tuple.Item2.Equals(programmerTo)).Item1;
         }

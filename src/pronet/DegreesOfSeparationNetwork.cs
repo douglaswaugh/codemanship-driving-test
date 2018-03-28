@@ -5,7 +5,7 @@ using System.Linq;
 namespace ProNet
 {
     // TODO: This could probably do with being refactored a bit
-    public class DegreesOfSeparationNetwork
+    public class DegreesOfSeparation
     {
         public List<Tuple<int, IProgrammer>> BuildNetwork(IProgrammer programmerFrom)
         {

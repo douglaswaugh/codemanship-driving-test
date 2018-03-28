@@ -5,12 +5,12 @@ using ProNet;
 
 namespace Tests
 {
-    public class DegreesOfSeparationNetworkTests
+    public class DegreesOfSeparationTests
     {
         [Test]
         public void Should_build_network_using_programmers_recommendations()
         {
-            var degreesOfSeparation = new DegreesOfSeparationNetwork();
+            var degreesOfSeparation = new DegreesOfSeparation();
 
             var programmer1 = BuildProgrammer("Programmer1");
             var programmer2 = BuildProgrammer("Programmer2");
@@ -33,7 +33,7 @@ namespace Tests
             var programmer2 = BuildProgrammer("Programmer2");
             programmer1.Recommends(programmer2);
 
-            var degreesOfSeparation = new DegreesOfSeparationNetwork();
+            var degreesOfSeparation = new DegreesOfSeparation();
             var queue = degreesOfSeparation.BuildNetwork(programmer1);
 
             var expectedQueue = new Queue<Tuple<int, IProgrammer>>();
@@ -53,7 +53,7 @@ namespace Tests
             programmer1.Recommends(programmer3);
             programmer3.Recommends(programmer2);
 
-            var degreesOfSeparation = new DegreesOfSeparationNetwork();
+            var degreesOfSeparation = new DegreesOfSeparation();
             var queue = degreesOfSeparation.BuildNetwork(programmer1);
 
             var expectedQueue = new Queue<Tuple<int, IProgrammer>>();
@@ -73,7 +73,7 @@ namespace Tests
             programmer1.Recommends(programmer2);
             programmer1.Recommends(programmer3);
 
-            var degreesOfSeparation = new DegreesOfSeparationNetwork();
+            var degreesOfSeparation = new DegreesOfSeparation();
             var queue = degreesOfSeparation.BuildNetwork(programmer1);
 
             var expectedQueue = new Queue<Tuple<int, IProgrammer>>();
@@ -94,7 +94,7 @@ namespace Tests
             programmer1.Recommends(programmer2);
             programmer2.Recommends(programmer3);
 
-            var degreesOfSeparation = new DegreesOfSeparationNetwork();
+            var degreesOfSeparation = new DegreesOfSeparation();
             var queue = degreesOfSeparation.BuildNetwork(programmer1);
 
             var expectedQueue = new Queue<Tuple<int, IProgrammer>>();
@@ -117,7 +117,7 @@ namespace Tests
             programmer2.Recommends(programmer3);
             programmer3.Recommends(programmer4);
 
-            var degreesOfSeparation = new DegreesOfSeparationNetwork();
+            var degreesOfSeparation = new DegreesOfSeparation();
             var queue = degreesOfSeparation.BuildNetwork(programmer1);
 
             var expectedQueue = new Queue<Tuple<int, IProgrammer>>();
@@ -142,7 +142,7 @@ namespace Tests
             ed.Recommends(rick);
             rick.Recommends(ed);
 
-            var degreesOfSeparation = new DegreesOfSeparationNetwork();
+            var degreesOfSeparation = new DegreesOfSeparation();
             var queue = degreesOfSeparation.BuildNetwork(jill);
 
             var expectedQueue = new Queue<Tuple<int, IProgrammer>>();
@@ -185,7 +185,7 @@ namespace Tests
             rick.Recommends(ed);
             stu.Recommends(frank);
 
-            var degreesOfSeparation = new DegreesOfSeparationNetwork();
+            var degreesOfSeparation = new DegreesOfSeparation();
             var queue = degreesOfSeparation.BuildNetwork(jill);
 
             var expectedQueue = new Queue<Tuple<int, IProgrammer>>();
@@ -205,7 +205,7 @@ namespace Tests
 
         private Programmer BuildProgrammer(string name)
         {
-            return new Programmer(name, new string[]{}, new DegreesOfSeparationNetwork());
+            return new Programmer(name, new string[]{}, new DegreesOfSeparation());
         }
 
         private Tuple<int, IProgrammer> BuildTuple(int degreeOfSeparation, IProgrammer programmer)
