@@ -10,7 +10,7 @@ namespace ProNet
         public List<Tuple<int, IProgrammer>> BuildNetwork(IProgrammer programmerFrom)
         {
             var toProcess = new Queue<Tuple<int, IProgrammer>>();
-            AddRelationsTo(programmerFrom, toProcess, 1, programmerFrom, new List<Tuple<int, IProgrammer>>());
+            toProcess.Enqueue(new Tuple<int, IProgrammer>(0, programmerFrom));
 
             var network = new List<Tuple<int, IProgrammer>>();
 
@@ -20,17 +20,17 @@ namespace ProNet
 
                 network.Add(programmerToProcess);
 
-                AddRelationsTo(programmerFrom, toProcess, programmerToProcess.Item1 + 1, programmerToProcess.Item2, network);
+                AddRelationsTo(toProcess, programmerToProcess.Item1 + 1, programmerToProcess.Item2, network);
             }
 
             return network;
         }
 
-        private void AddRelationsTo(IProgrammer programmerFrom, Queue<Tuple<int, IProgrammer>> queue, int degreeOfSeparation, IProgrammer processed, List<Tuple<int, IProgrammer>> network)
+        private void AddRelationsTo(Queue<Tuple<int, IProgrammer>> queue, int degreeOfSeparation, IProgrammer processed, List<Tuple<int, IProgrammer>> network)
         {
             foreach (var relation in processed.Relations)
             {
-                if (processed != relation && programmerFrom != relation && !queue.Any(tuple => tuple.Item2.Equals(relation)) && !network.Any(tuple => tuple.Item2.Equals(relation)))
+                if (processed != relation && !queue.Any(tuple => tuple.Item2.Equals(relation)) && !network.Any(tuple => tuple.Item2.Equals(relation)))
                 {
                     queue.Enqueue(new Tuple<int, IProgrammer>(degreeOfSeparation, relation));
                 }

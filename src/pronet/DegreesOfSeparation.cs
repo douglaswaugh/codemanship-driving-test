@@ -15,9 +15,6 @@ namespace ProNet
 
         public int Calculate(IProgrammer programmerFrom, IProgrammer programmerTo)
         {
-            if (programmerFrom == programmerTo)
-                return 0;
-            
             var network = programmerFrom.BuildNetwork();
 
             return FindDegrees(programmerTo, network);

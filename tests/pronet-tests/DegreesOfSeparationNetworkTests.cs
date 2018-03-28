@@ -20,6 +20,7 @@ namespace Tests
             var queue = degreesOfSeparation.BuildNetwork(programmer1);
 
             var expectedQueue = new Queue<Tuple<int, IProgrammer>>();
+            expectedQueue.Enqueue(new Tuple<int, IProgrammer>(0, programmer1));
             expectedQueue.Enqueue(new Tuple<int, IProgrammer>(1, programmer2));
 
             Assert.That(queue, Is.EquivalentTo(expectedQueue));
@@ -36,6 +37,7 @@ namespace Tests
             var queue = degreesOfSeparation.BuildNetwork(programmer1);
 
             var expectedQueue = new Queue<Tuple<int, IProgrammer>>();
+            expectedQueue.Enqueue(new Tuple<int, IProgrammer>(0, programmer1));
             expectedQueue.Enqueue(new Tuple<int, IProgrammer>(1, programmer2));
 
             Assert.That(queue, Is.EquivalentTo(expectedQueue));
@@ -55,6 +57,7 @@ namespace Tests
             var queue = degreesOfSeparation.BuildNetwork(programmer1);
 
             var expectedQueue = new Queue<Tuple<int, IProgrammer>>();
+            expectedQueue.Enqueue(new Tuple<int, IProgrammer>(0, programmer1));
             expectedQueue.Enqueue(new Tuple<int, IProgrammer>(1, programmer2));
             expectedQueue.Enqueue(new Tuple<int, IProgrammer>(1, programmer3));
 
@@ -74,6 +77,7 @@ namespace Tests
             var queue = degreesOfSeparation.BuildNetwork(programmer1);
 
             var expectedQueue = new Queue<Tuple<int, IProgrammer>>();
+            expectedQueue.Enqueue(new Tuple<int, IProgrammer>(0, programmer1));
             expectedQueue.Enqueue(new Tuple<int, IProgrammer>(1, programmer2));
             expectedQueue.Enqueue(new Tuple<int, IProgrammer>(1, programmer3));
 
@@ -94,6 +98,7 @@ namespace Tests
             var queue = degreesOfSeparation.BuildNetwork(programmer1);
 
             var expectedQueue = new Queue<Tuple<int, IProgrammer>>();
+            expectedQueue.Enqueue(new Tuple<int, IProgrammer>(0, programmer1));
             expectedQueue.Enqueue(new Tuple<int, IProgrammer>(1, programmer2));
             expectedQueue.Enqueue(new Tuple<int, IProgrammer>(2, programmer3));
 
@@ -116,6 +121,7 @@ namespace Tests
             var queue = degreesOfSeparation.BuildNetwork(programmer1);
 
             var expectedQueue = new Queue<Tuple<int, IProgrammer>>();
+            expectedQueue.Enqueue(new Tuple<int, IProgrammer>(0, programmer1));
             expectedQueue.Enqueue(new Tuple<int, IProgrammer>(1, programmer2));
             expectedQueue.Enqueue(new Tuple<int, IProgrammer>(2, programmer3));
             expectedQueue.Enqueue(new Tuple<int, IProgrammer>(3, programmer4));
@@ -140,6 +146,7 @@ namespace Tests
             var queue = degreesOfSeparation.BuildNetwork(jill);
 
             var expectedQueue = new Queue<Tuple<int, IProgrammer>>();
+            expectedQueue.Enqueue(new Tuple<int, IProgrammer>(0, jill));
             expectedQueue.Enqueue(new Tuple<int, IProgrammer>(1, bill));
             expectedQueue.Enqueue(new Tuple<int, IProgrammer>(2, ed));
             expectedQueue.Enqueue(new Tuple<int, IProgrammer>(3, rick));
@@ -182,6 +189,7 @@ namespace Tests
             var queue = degreesOfSeparation.BuildNetwork(jill);
 
             var expectedQueue = new Queue<Tuple<int, IProgrammer>>();
+            expectedQueue.Enqueue(BuildTuple(0, jill));
             expectedQueue.Enqueue(BuildTuple(1, nick));
             expectedQueue.Enqueue(BuildTuple(1, dave));
             expectedQueue.Enqueue(BuildTuple(1, bill));
