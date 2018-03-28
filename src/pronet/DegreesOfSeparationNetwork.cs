@@ -9,11 +9,11 @@ namespace ProNet
     {
         public List<Tuple<int, IProgrammer>> BuildNetwork(IProgrammer programmerFrom)
         {
-            var toProcess = new Queue<Tuple<int, IProgrammer>>();
-            toProcess.Enqueue(new Tuple<int, IProgrammer>(0, programmerFrom));
+            return BuildNetwork(InitialiseQueue(programmerFrom), InitialiseNetwork());
+        }
 
-            var network = new List<Tuple<int, IProgrammer>>();
-
+        private List<Tuple<int, IProgrammer>> BuildNetwork(Queue<Tuple<int, IProgrammer>> toProcess, List<Tuple<int, IProgrammer>> network)
+        {
             while (toProcess.Count > 0)
             {
                 var programmerToProcess = toProcess.Dequeue();
@@ -26,6 +26,18 @@ namespace ProNet
             }
 
             return network;
+        }
+
+        private List<Tuple<int, IProgrammer>> InitialiseNetwork()
+        {
+            return new List<Tuple<int, IProgrammer>>();
+        }
+
+        private Queue<Tuple<int, IProgrammer>> InitialiseQueue(IProgrammer programmerFrom)
+        {
+            var toProcess = new Queue<Tuple<int, IProgrammer>>();
+            toProcess.Enqueue(new Tuple<int, IProgrammer>(0, programmerFrom));
+            return toProcess;
         }
 
         private bool NetworkContainsProgrammer(List<Tuple<int, IProgrammer>> network, Tuple<int, IProgrammer> programmerToProcess)
