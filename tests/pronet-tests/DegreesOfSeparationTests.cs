@@ -10,20 +10,16 @@ namespace Tests
         [Test]
         public void Should_build_network_using_programmers_recommendations()
         {
-            var degreesOfSeparation = new DegreesOfSeparation();
-
             var programmer1 = BuildProgrammer("Programmer1");
             var programmer2 = BuildProgrammer("Programmer2");
 
+            var degreesOfSeparation = new DegreesOfSeparation(new[] {programmer1, programmer2});
+
             programmer1.Recommends(programmer2);
 
-            var queue = degreesOfSeparation.BuildNetwork(programmer1);
+            var between = degreesOfSeparation.Between(programmer1, programmer2);
 
-            var expectedQueue = new Queue<Tuple<int, IProgrammer>>();
-            expectedQueue.Enqueue(new Tuple<int, IProgrammer>(0, programmer1));
-            expectedQueue.Enqueue(new Tuple<int, IProgrammer>(1, programmer2));
-
-            Assert.That(queue, Is.EquivalentTo(expectedQueue));
+            Assert.That(between, Is.EqualTo(1));
         }
 
         [Test]
@@ -33,14 +29,11 @@ namespace Tests
             var programmer2 = BuildProgrammer("Programmer2");
             programmer1.Recommends(programmer2);
 
-            var degreesOfSeparation = new DegreesOfSeparation();
-            var queue = degreesOfSeparation.BuildNetwork(programmer1);
+            var degreesOfSeparation = new DegreesOfSeparation(new[] {programmer1, programmer2});
 
-            var expectedQueue = new Queue<Tuple<int, IProgrammer>>();
-            expectedQueue.Enqueue(new Tuple<int, IProgrammer>(0, programmer1));
-            expectedQueue.Enqueue(new Tuple<int, IProgrammer>(1, programmer2));
+            var between = degreesOfSeparation.Between(programmer1, programmer2);
 
-            Assert.That(queue, Is.EquivalentTo(expectedQueue));
+            Assert.That(between, Is.EqualTo(1));
         }
 
         [Test]
@@ -53,15 +46,11 @@ namespace Tests
             programmer1.Recommends(programmer3);
             programmer3.Recommends(programmer2);
 
-            var degreesOfSeparation = new DegreesOfSeparation();
-            var queue = degreesOfSeparation.BuildNetwork(programmer1);
+            var degreesOfSeparation = new DegreesOfSeparation(new[] {programmer1, programmer2, programmer3});
 
-            var expectedQueue = new Queue<Tuple<int, IProgrammer>>();
-            expectedQueue.Enqueue(new Tuple<int, IProgrammer>(0, programmer1));
-            expectedQueue.Enqueue(new Tuple<int, IProgrammer>(1, programmer2));
-            expectedQueue.Enqueue(new Tuple<int, IProgrammer>(1, programmer3));
+            var between = degreesOfSeparation.Between(programmer1, programmer3);
 
-            Assert.That(queue, Is.EquivalentTo(expectedQueue));
+            Assert.That(between, Is.EqualTo(1));
         }
 
         [Test]
@@ -73,15 +62,11 @@ namespace Tests
             programmer1.Recommends(programmer2);
             programmer1.Recommends(programmer3);
 
-            var degreesOfSeparation = new DegreesOfSeparation();
-            var queue = degreesOfSeparation.BuildNetwork(programmer1);
+            var degreesOfSeparation = new DegreesOfSeparation(new[] {programmer1, programmer2, programmer3});
 
-            var expectedQueue = new Queue<Tuple<int, IProgrammer>>();
-            expectedQueue.Enqueue(new Tuple<int, IProgrammer>(0, programmer1));
-            expectedQueue.Enqueue(new Tuple<int, IProgrammer>(1, programmer2));
-            expectedQueue.Enqueue(new Tuple<int, IProgrammer>(1, programmer3));
+            var between = degreesOfSeparation.Between(programmer1, programmer2);
 
-            Assert.That(queue, Is.EquivalentTo(expectedQueue));
+            Assert.That(between, Is.EqualTo(1));
         }
 
         [Test]
@@ -94,15 +79,11 @@ namespace Tests
             programmer1.Recommends(programmer2);
             programmer2.Recommends(programmer3);
 
-            var degreesOfSeparation = new DegreesOfSeparation();
-            var queue = degreesOfSeparation.BuildNetwork(programmer1);
+            var degreesOfSeparation = new DegreesOfSeparation(new[] {programmer1, programmer2, programmer3});
 
-            var expectedQueue = new Queue<Tuple<int, IProgrammer>>();
-            expectedQueue.Enqueue(new Tuple<int, IProgrammer>(0, programmer1));
-            expectedQueue.Enqueue(new Tuple<int, IProgrammer>(1, programmer2));
-            expectedQueue.Enqueue(new Tuple<int, IProgrammer>(2, programmer3));
+            var between = degreesOfSeparation.Between(programmer1, programmer3);
 
-            Assert.That(queue, Is.EquivalentTo(expectedQueue));
+            Assert.That(between, Is.EqualTo(2));
         }
 
         [Test]
@@ -117,16 +98,11 @@ namespace Tests
             programmer2.Recommends(programmer3);
             programmer3.Recommends(programmer4);
 
-            var degreesOfSeparation = new DegreesOfSeparation();
-            var queue = degreesOfSeparation.BuildNetwork(programmer1);
+            var degreesOfSeparation = new DegreesOfSeparation(new[] {programmer1, programmer2, programmer3, programmer4});
 
-            var expectedQueue = new Queue<Tuple<int, IProgrammer>>();
-            expectedQueue.Enqueue(new Tuple<int, IProgrammer>(0, programmer1));
-            expectedQueue.Enqueue(new Tuple<int, IProgrammer>(1, programmer2));
-            expectedQueue.Enqueue(new Tuple<int, IProgrammer>(2, programmer3));
-            expectedQueue.Enqueue(new Tuple<int, IProgrammer>(3, programmer4));
+            var between = degreesOfSeparation.Between(programmer1, programmer4);
 
-            Assert.That(queue, Is.EquivalentTo(expectedQueue));
+            Assert.That(between, Is.EqualTo(3));
         }
 
         [Test]
@@ -142,16 +118,11 @@ namespace Tests
             ed.Recommends(rick);
             rick.Recommends(ed);
 
-            var degreesOfSeparation = new DegreesOfSeparation();
-            var queue = degreesOfSeparation.BuildNetwork(jill);
+            var degreesOfSeparation = new DegreesOfSeparation(new[] {jill, bill, ed, rick});
 
-            var expectedQueue = new Queue<Tuple<int, IProgrammer>>();
-            expectedQueue.Enqueue(new Tuple<int, IProgrammer>(0, jill));
-            expectedQueue.Enqueue(new Tuple<int, IProgrammer>(1, bill));
-            expectedQueue.Enqueue(new Tuple<int, IProgrammer>(2, ed));
-            expectedQueue.Enqueue(new Tuple<int, IProgrammer>(3, rick));
+            var between = degreesOfSeparation.Between(jill, rick);
 
-            Assert.That(queue, Is.EquivalentTo(expectedQueue));
+            Assert.That(between, Is.EqualTo(3));
         }
 
         [Test]
@@ -185,22 +156,11 @@ namespace Tests
             rick.Recommends(ed);
             stu.Recommends(frank);
 
-            var degreesOfSeparation = new DegreesOfSeparation();
-            var queue = degreesOfSeparation.BuildNetwork(jill);
+            var degreesOfSeparation = new DegreesOfSeparation(new[] {jill, bill, ed, rick, nick, dave, stu, frank, liz, jason});
 
-            var expectedQueue = new Queue<Tuple<int, IProgrammer>>();
-            expectedQueue.Enqueue(BuildTuple(0, jill));
-            expectedQueue.Enqueue(BuildTuple(1, nick));
-            expectedQueue.Enqueue(BuildTuple(1, dave));
-            expectedQueue.Enqueue(BuildTuple(1, bill));
-            expectedQueue.Enqueue(BuildTuple(2, stu));
-            expectedQueue.Enqueue(BuildTuple(2, frank));
-            expectedQueue.Enqueue(BuildTuple(2, jason));
-            expectedQueue.Enqueue(BuildTuple(2, liz));
-            expectedQueue.Enqueue(BuildTuple(2, ed));
-            expectedQueue.Enqueue(BuildTuple(3, rick));
+            var between = degreesOfSeparation.Between(jill, rick);
 
-            Assert.That(queue, Is.EquivalentTo(expectedQueue));
+            Assert.That(between, Is.EqualTo(3));
         }
 
         private Programmer BuildProgrammer(string name)

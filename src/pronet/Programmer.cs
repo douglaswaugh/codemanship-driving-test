@@ -44,14 +44,6 @@ namespace ProNet
 
         private decimal ProgrammerRankShare => _rank / _recommendations.Count;
 
-        public void AddRelationsTo(Queue<Tuple<int, IProgrammer>> queue, int degreeOfSeparation)
-        {
-            foreach (var relation in _recommendations.Concat(_recommendedBys))
-            {
-                queue.Enqueue(new Tuple<int, IProgrammer>(degreeOfSeparation, relation));
-            }
-        }
-
         public override string ToString()
         {
             return Name;
@@ -68,6 +60,11 @@ namespace ProNet
         public override int GetHashCode()
         {
             return Name.GetHashCode();
+        }
+
+        public IEnumerable<IProgrammer> Relations()
+        {
+            return _recommendations.Concat(_recommendedBys);
         }
     }
 }

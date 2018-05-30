@@ -7,51 +7,70 @@ namespace ProNet
     // TODO: This could probably do with being refactored a bit
     public class DegreesOfSeparation
     {
+        private readonly IEnumerable<IProgrammer> _programmers;
+
+        public DegreesOfSeparation(IEnumerable<IProgrammer> programmers)
+        {
+            _programmers = programmers;
+        }
+
         public int Between(IProgrammer programmerFrom, IProgrammer programmerTo)
         {
-            var network = BuildNetwork(programmerFrom);
+            if (programmerFrom.Equals(programmerTo))
+                return 0;
 
-            return network.Single(tuple => tuple.Item2.Equals(programmerTo)).Item1;
+            var parents = BuildParentPointers(programmerFrom);
+
+            return ShortestPath(programmerFrom, programmerTo, parents);
         }
 
-        public List<Tuple<int, IProgrammer>> BuildNetwork(IProgrammer programmerFrom)
+        private Dictionary<IProgrammer, IProgrammer> BuildParentPointers(IProgrammer programmerFrom)
         {
-            return BuildNetwork(InitialiseQueue(programmerFrom), InitialiseNetwork());
-        }
+            var parents = new Dictionary<IProgrammer, IProgrammer>();
+            var queue = new Queue<IProgrammer>();
 
-        private List<Tuple<int, IProgrammer>> BuildNetwork(Queue<Tuple<int, IProgrammer>> toProcess, List<Tuple<int, IProgrammer>> network)
-        {
-            while (toProcess.Count > 0)
-                AddProgrammerToNetwork(toProcess, network);
+            queue.Enqueue(programmerFrom);
 
-            return network;
-        }
-
-        private void AddProgrammerToNetwork(Queue<Tuple<int, IProgrammer>> toProcess, List<Tuple<int, IProgrammer>> network)
-        {
-            var programmerToProcess = toProcess.Dequeue();
-            if (!NetworkContainsProgrammer(network, programmerToProcess))
+            while (queue.Count() > 0)
             {
-                network.Add(programmerToProcess);
-                programmerToProcess.Item2.AddRelationsTo(toProcess, programmerToProcess.Item1 + 1);
+                AddAdjacentNodes(parents, queue);
+                queue.Dequeue();
+            }
+
+            return parents;
+        }
+
+        private static void AddAdjacentNodes(Dictionary<IProgrammer, IProgrammer> parents, Queue<IProgrammer> queue)
+        {
+            var candidate = queue.First();
+
+            foreach (var programmer in candidate.Relations())
+            {
+                AddNode(parents, queue, candidate, programmer);
             }
         }
 
-        private List<Tuple<int, IProgrammer>> InitialiseNetwork()
+        private static void AddNode(Dictionary<IProgrammer, IProgrammer> parents, Queue<IProgrammer> queue, IProgrammer parent, IProgrammer programmer)
         {
-            return new List<Tuple<int, IProgrammer>>();
+            if (!parents.ContainsKey(programmer))
+            {
+                queue.Enqueue(programmer);
+                parents.Add(programmer, parent);
+            }
         }
 
-        private Queue<Tuple<int, IProgrammer>> InitialiseQueue(IProgrammer programmerFrom)
+        private static int ShortestPath(IProgrammer programmerFrom, IProgrammer programmerTo, Dictionary<IProgrammer, IProgrammer> parents)
         {
-            var toProcess = new Queue<Tuple<int, IProgrammer>>();
-            toProcess.Enqueue(new Tuple<int, IProgrammer>(0, programmerFrom));
-            return toProcess;
-        }
+            var degreesOfSeparation = 0;
+            IProgrammer parentProgrammer = programmerTo;
 
-        private bool NetworkContainsProgrammer(List<Tuple<int, IProgrammer>> network, Tuple<int, IProgrammer> programmerToProcess)
-        {
-            return network.Any(tuple => tuple.Item2.Equals(programmerToProcess.Item2));
+            while (!programmerFrom.Equals(parentProgrammer))
+            {
+                parentProgrammer = parents[parentProgrammer];
+                degreesOfSeparation++;
+            }
+
+            return degreesOfSeparation;
         }
     }
 }

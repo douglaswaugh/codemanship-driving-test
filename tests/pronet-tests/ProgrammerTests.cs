@@ -10,7 +10,7 @@ namespace ProNet.Test.Unit
         {
             var programmer1 = new Programmer("Programemr1", new string[]{});
             
-            var degreesOfSeparation = new DegreesOfSeparation();
+            var degreesOfSeparation = new DegreesOfSeparation(new[] {programmer1});
 
             var degrees = degreesOfSeparation.Between(programmer1, programmer1);
 
@@ -24,7 +24,7 @@ namespace ProNet.Test.Unit
             var programmer2 = new Programmer("Programmer2", new string[]{});
             programmer1.Recommends(programmer2);
 
-            var degreesOfSeparation = new DegreesOfSeparation();
+            var degreesOfSeparation = new DegreesOfSeparation(new[] {programmer1, programmer2});
 
             var degrees = degreesOfSeparation.Between(programmer1, programmer2);
 

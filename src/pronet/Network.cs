@@ -8,10 +8,10 @@ namespace ProNet
         public readonly IEnumerable<IProgrammer> _programmers;
         private readonly DegreesOfSeparation _degreesOfSeparation;
 
-        public Network(IEnumerable<IProgrammer> programmers, DegreesOfSeparation degreesOfSeparation)
+        public Network(IEnumerable<IProgrammer> programmers, IDegreesOfSeparationFactory degreesOfSeparationFactory)
         {
             _programmers = programmers;
-            _degreesOfSeparation = degreesOfSeparation;
+            _degreesOfSeparation = degreesOfSeparationFactory.BuildDegreesOfSeparation(_programmers);
         }
 
         public void Calculate()
