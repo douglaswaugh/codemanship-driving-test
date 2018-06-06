@@ -58,8 +58,10 @@ namespace ProNet.Test.Customer
         [Test]
         public void GetTeamStrength()
         {
-            //const string leader = "Jason";
-            //Assert.That(_proNet.TeamStrength("Ruby", new[] {leader, "Bill", "Frank"}), Is.EqualTo(0.36).Within(0.01));
+            const string leader = "Jason";
+            var teamStrength = _proNet.TeamStrength("Ruby", new[] { leader, "Bill", "Frank"} );
+
+            Assert.That(teamStrength, Is.EqualTo(0.36).Within(0.01));
         }
 
         [Test]

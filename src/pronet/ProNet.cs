@@ -35,7 +35,20 @@ namespace ProNet
 
         public double TeamStrength(string language, string[] team)
         {
-            throw new System.NotImplementedException();
+            var leader = team[0];
+
+            double jasonRank = Rank(leader);
+            int jasonRubySkillIndex = Array.IndexOf(Skills(leader), "Ruby") + 1;;
+            double billRank = Rank("Bill");
+            int billRubySkillIndex = Array.IndexOf(Skills("Bill"), "Ruby") + 1;
+            int billDegreesFromJason = DegreesOfSeparation(leader, "Bill");
+            double frankRank = Rank("Frank");
+            int frankRubySkillIndex = Array.IndexOf(Skills("Frank"), "Ruby") + 1;
+            int frankDegreesFromJason = DegreesOfSeparation(leader, "Frank");
+
+            double teamStrength = ((double)1 / (double)3) * ((jasonRank / jasonRubySkillIndex) + (billRank / (billRubySkillIndex * billDegreesFromJason)) + (frankRank / (frankRubySkillIndex * frankDegreesFromJason)));
+
+            return teamStrength;
         }
 
         public string[] FindStrongestTeam(string language, int teamSize)
