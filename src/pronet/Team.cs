@@ -17,11 +17,7 @@ namespace ProNet
             _degreesOfSeparation = degreesOfSeparation;
         }
 
-        public decimal Strength =>
-            1m / _members.Count() *
-            _members
-                .Select(member => MemberStrength(member))
-                .Sum();
+        public decimal Strength => (1m / _members.Count()) * _members.Sum(member => MemberStrength(member));
 
         private decimal MemberStrength(IProgrammer member)
         {
