@@ -14,13 +14,18 @@ namespace ProNet
             _programmers = programmers;
             _degreesOfSeparation = degreesOfSeparationFactory.BuildDegreesOfSeparation(_programmers);
             _teamFactory = teamFactory;
+            Calculate();
         }
 
         public void Calculate()
         {
+            int count = 0;
             do
+            {
                 UpdateRanks();
-            while (1 - AverageRank() >= 0.000001m);
+                count++;
+            }
+            while (1 - AverageRank() >= 0.000001m && count < 10000);
         }
 
         public ProgrammerDto GetDetailsFor(string name)

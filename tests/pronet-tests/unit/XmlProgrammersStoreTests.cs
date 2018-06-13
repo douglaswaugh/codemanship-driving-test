@@ -8,11 +8,11 @@ namespace ProNet.Test.Unit
     public class XmlNetworkStoreTests
     {
         [Test]
-        public void Programmer_should_have_a_rank_of_zero_when_first_built()
+        public void Rank_should_be_calculated_when_network_is_built()
         {
             var networkStore = new XmlNetworkStore(new HardCodedXmlLoader(), new NetworkFactory(new ProgrammerFactory()));
             var network = networkStore.GetNetwork();
-            Assert.That(network.GetDetailsFor("Nick").Rank, Is.EqualTo(0));
+            Assert.That(network.GetDetailsFor("Nick").Rank, Is.EqualTo(0.15m));
         }
 
         [Test]

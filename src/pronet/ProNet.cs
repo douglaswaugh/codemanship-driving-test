@@ -10,7 +10,6 @@ namespace ProNet
         public ProNet(INetworkStore networkStore)
         {
             _network = networkStore.GetNetwork();
-            _network.Calculate();
         }
 
         public string[] Skills(string programmer)
