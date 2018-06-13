@@ -25,12 +25,12 @@ namespace ProNet
 
         private decimal MemberStrength(IProgrammer member)
         {
-            var rankSkillDegree = new Tuple<decimal, int, int>(
-                member.Details.Rank,
-                Array.IndexOf(member.Details.Skills.ToArray(), _language) + 1,
-                _members.First().Equals(member) ? 1 : _degreesOfSeparation.Between(_members.First(), member));
+            decimal rank = member.Details.Rank;
+            int skillIndex = Array.IndexOf(member.Details.Skills.ToArray(), _language) + 1;
+            IProgrammer leader = _members.First();
+            int degreesOfSeparation = leader.Equals(member) ? 1 : _degreesOfSeparation.Between(leader, member);
 
-            return rankSkillDegree.Item1 / (rankSkillDegree.Item2 * rankSkillDegree.Item3);
+            return rank / (skillIndex * degreesOfSeparation);
         }
     }
 }
