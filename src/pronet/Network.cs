@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace ProNet
@@ -8,11 +7,13 @@ namespace ProNet
     {
         public readonly IEnumerable<IProgrammer> _programmers;
         private readonly DegreesOfSeparation _degreesOfSeparation;
+        private readonly ITeamFactory _teamFactory;
 
-        public Network(IEnumerable<IProgrammer> programmers, IDegreesOfSeparationFactory degreesOfSeparationFactory)
+        public Network(IEnumerable<IProgrammer> programmers, IDegreesOfSeparationFactory degreesOfSeparationFactory, ITeamFactory teamFactory)
         {
             _programmers = programmers;
             _degreesOfSeparation = degreesOfSeparationFactory.BuildDegreesOfSeparation(_programmers);
+            _teamFactory = teamFactory;
         }
 
         public void Calculate()
@@ -32,19 +33,12 @@ namespace ProNet
             return _degreesOfSeparation.Between(GetByName(programmer1), GetByName(programmer2));
         }
 
-        public decimal TeamStrength(string language, string[] team)
+        public decimal TeamStrength(string language, string[] memberNames)
         {
-            var leader = team[0];
+            var members = memberNames.Select(name => GetByName(name));
+            var team = _teamFactory.CreateTeam(language, members, _degreesOfSeparation);
 
-            var rankSkillDegrees = ((decimal)1 / (decimal)team.Length) * team
-                .Select(member =>
-                    new Tuple<decimal,int, int>(
-                        GetDetailsFor(member).Rank,
-                        Array.IndexOf(GetDetailsFor(member).Skills.ToArray(), language) + 1,
-                        leader.Equals(member) ? 1 : DegreesOfSeparation(leader, member)))
-                .Aggregate(0m, (total, rankSkillDegree) => total += rankSkillDegree.Item1 / (rankSkillDegree.Item2 * rankSkillDegree.Item3));
-
-            return rankSkillDegrees;
+            return team.Strength;
         }
 
         private IProgrammer GetByName(string name)
