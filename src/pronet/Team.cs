@@ -25,10 +25,10 @@ namespace ProNet
 
         private decimal MemberStrength(IProgrammer member)
         {
-            decimal rank = member.Details.Rank;
-            int skillIndex = Array.IndexOf(member.Details.Skills.ToArray(), _language) + 1;
-            IProgrammer leader = _members.First();
-            int degreesOfSeparation = leader.Equals(member) ? 1 : _degreesOfSeparation.Between(leader, member);
+            var rank = member.Details.Rank;
+            var skillIndex = Array.IndexOf(member.Details.Skills.ToArray(), _language) + 1;
+            var leader = _members.First();
+            var degreesOfSeparation = leader.Equals(member) ? 1 : _degreesOfSeparation.Between(leader, member);
 
             return rank / (skillIndex * degreesOfSeparation);
         }
