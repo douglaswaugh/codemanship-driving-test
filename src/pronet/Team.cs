@@ -18,7 +18,7 @@ namespace ProNet
         }
 
         public decimal Strength =>
-            ((decimal)1 / (decimal)_members.Count()) *
+            1m / _members.Count() *
             _members
                 .Select(member => MemberStrength(member))
                 .Sum();
