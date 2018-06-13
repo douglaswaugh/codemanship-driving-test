@@ -37,18 +37,15 @@ namespace ProNet
         {
             var leader = team[0];
 
-            double jasonRank = Rank(leader);
-            int jasonRubySkillIndex = Array.IndexOf(Skills(leader), "Ruby") + 1;;
-            double billRank = Rank("Bill");
-            int billRubySkillIndex = Array.IndexOf(Skills("Bill"), "Ruby") + 1;
-            int billDegreesFromJason = DegreesOfSeparation(leader, "Bill");
-            double frankRank = Rank("Frank");
-            int frankRubySkillIndex = Array.IndexOf(Skills("Frank"), "Ruby") + 1;
-            int frankDegreesFromJason = DegreesOfSeparation(leader, "Frank");
+            var rankSkillDegrees = ((double)1 / (double)team.Length) * team
+                .Select(member =>
+                    new Tuple<double,int, int>(
+                        Rank(member),
+                        Array.IndexOf(Skills(member), language) + 1,
+                        leader.Equals(member) ? 1 : DegreesOfSeparation(leader, member)))
+                .Aggregate(0d, (total, rankSkillDegree) => total += rankSkillDegree.Item1 / (rankSkillDegree.Item2 * rankSkillDegree.Item3));
 
-            double teamStrength = ((double)1 / (double)3) * ((jasonRank / jasonRubySkillIndex) + (billRank / (billRubySkillIndex * billDegreesFromJason)) + (frankRank / (frankRubySkillIndex * frankDegreesFromJason)));
-
-            return teamStrength;
+            return rankSkillDegrees;
         }
 
         public string[] FindStrongestTeam(string language, int teamSize)
