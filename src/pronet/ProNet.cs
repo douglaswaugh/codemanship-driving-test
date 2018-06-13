@@ -35,17 +35,7 @@ namespace ProNet
 
         public double TeamStrength(string language, string[] team)
         {
-            var leader = team[0];
-
-            var rankSkillDegrees = ((double)1 / (double)team.Length) * team
-                .Select(member =>
-                    new Tuple<double,int, int>(
-                        Rank(member),
-                        Array.IndexOf(Skills(member), language) + 1,
-                        leader.Equals(member) ? 1 : DegreesOfSeparation(leader, member)))
-                .Aggregate(0d, (total, rankSkillDegree) => total += rankSkillDegree.Item1 / (rankSkillDegree.Item2 * rankSkillDegree.Item3));
-
-            return rankSkillDegrees;
+            return Convert.ToDouble(_network.TeamStrength(language, team));
         }
 
         public string[] FindStrongestTeam(string language, int teamSize)

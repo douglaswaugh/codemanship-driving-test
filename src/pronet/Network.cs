@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ProNet
@@ -29,6 +30,21 @@ namespace ProNet
         public int DegreesOfSeparation(string programmer1, string programmer2)
         {
             return _degreesOfSeparation.Between(GetByName(programmer1), GetByName(programmer2));
+        }
+
+        public decimal TeamStrength(string language, string[] team)
+        {
+            var leader = team[0];
+
+            var rankSkillDegrees = ((decimal)1 / (decimal)team.Length) * team
+                .Select(member =>
+                    new Tuple<decimal,int, int>(
+                        GetDetailsFor(member).Rank,
+                        Array.IndexOf(GetDetailsFor(member).Skills.ToArray(), language) + 1,
+                        leader.Equals(member) ? 1 : DegreesOfSeparation(leader, member)))
+                .Aggregate(0m, (total, rankSkillDegree) => total += rankSkillDegree.Item1 / (rankSkillDegree.Item2 * rankSkillDegree.Item3));
+
+            return rankSkillDegrees;
         }
 
         private IProgrammer GetByName(string name)
