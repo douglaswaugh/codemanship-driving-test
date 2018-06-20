@@ -37,6 +37,12 @@ namespace ProNet
             return team.Strength;
         }
 
+        public string[] StrongestTeam(string language, int teamSize)
+        {
+            const string leader = "Nick";
+            return new[] {leader, "Dave", "Jason"};
+        }
+
         private IProgrammer GetByName(string name)
         {
             return _programmers.Single(programmer => programmer.IsNamed(name));

@@ -39,7 +39,7 @@ namespace ProNet
 
         public string[] FindStrongestTeam(string language, int teamSize)
         {
-            throw new System.NotImplementedException();
+            return _network.StrongestTeam(language, teamSize);
         }
     }
 }

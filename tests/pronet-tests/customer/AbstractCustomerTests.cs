@@ -67,8 +67,8 @@ namespace ProNet.Test.Customer
         [Test]
         public void FindStrongestTeam()
         {
-            //const string leader = "Nick";
-            //Assert.That(_proNet.FindStrongestTeam("Java", 3), Is.EqualTo(new[] {leader, "Dave", "Jason"}));
+            const string leader = "Nick";
+            Assert.That(_proNet.FindStrongestTeam("Java", 3), Is.EqualTo(new[] {leader, "Dave", "Jason"}));
         }
 
         #endregion
