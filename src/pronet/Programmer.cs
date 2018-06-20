@@ -12,6 +12,7 @@ namespace ProNet
         private readonly ICollection<Programmer> _recommendedBys;
         private readonly IEnumerable<string> _skills;
         private readonly IRankCalculator _rankCalculator;
+        private string Name => _name;
 
         public Programmer(string name, IEnumerable<string> skills, IRankCalculator rankCalculator)
         {
@@ -25,8 +26,7 @@ namespace ProNet
         public ProgrammerDto Details => new ProgrammerDto(Name, _rank, _recommendations.Select(programmer => programmer.Name), _skills);
         public bool IsNamed(string name) => Name.Equals(name);
         public IEnumerable<Programmer> RecommendedBys => _recommendedBys;
-
-        private string Name => _name;
+        public decimal ProgrammerRankShare => _rank / _recommendations.Count;
 
         public void Recommends(Programmer programmer)
         {
@@ -34,17 +34,20 @@ namespace ProNet
             programmer.RecommendedBy(this);
         }
 
-        private void RecommendedBy(Programmer programmer)
-        {
-            _recommendedBys.Add(programmer);
-        }
-
         public void UpdateRank()
         {
             _rank = _rankCalculator.CalculateRank(this);
         }
 
-        public decimal ProgrammerRankShare => _rank / _recommendations.Count;
+        public IEnumerable<IProgrammer> Relations()
+        {
+            return _recommendations.Concat(_recommendedBys);
+        }
+
+        private void RecommendedBy(Programmer programmer)
+        {
+            _recommendedBys.Add(programmer);
+        }
 
         public override string ToString()
         {
@@ -62,11 +65,6 @@ namespace ProNet
         public override int GetHashCode()
         {
             return Name.GetHashCode();
-        }
-
-        public IEnumerable<IProgrammer> Relations()
-        {
-            return _recommendations.Concat(_recommendedBys);
         }
     }
 }
