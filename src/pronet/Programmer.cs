@@ -11,17 +11,21 @@ namespace ProNet
         private readonly ICollection<Programmer> _recommendations;
         private readonly ICollection<Programmer> _recommendedBys;
         private readonly IEnumerable<string> _skills;
+        private readonly IRankCalculator _rankCalculator;
 
-        public Programmer(string name, IEnumerable<string> skills)
+        public Programmer(string name, IEnumerable<string> skills, IRankCalculator rankCalculator)
         {
             _recommendations = new List<Programmer>();
             _recommendedBys = new List<Programmer>();
             _name = name;
             _skills = skills;
+            _rankCalculator = rankCalculator;
         }
 
         public ProgrammerDto Details => new ProgrammerDto(Name, _rank, _recommendations.Select(programmer => programmer.Name), _skills);
         public bool IsNamed(string name) => Name.Equals(name);
+        public IEnumerable<Programmer> RecommendedBys => _recommendedBys;
+
         private string Name => _name;
 
         public void Recommends(Programmer programmer)
@@ -37,12 +41,10 @@ namespace ProNet
 
         public void UpdateRank()
         {
-            // (1 - d) + d(PR(T1)/C(T1)) + ... + d(PR(Tn)/C(Tn))
-            _rank = _recommendedBys
-                .Aggregate(1m - 0.85m, (current, programmer) => current + 0.85m * programmer.ProgrammerRankShare);
+            _rank = _rankCalculator.CalculateRank(this);
         }
 
-        private decimal ProgrammerRankShare => _rank / _recommendations.Count;
+        public decimal ProgrammerRankShare => _rank / _recommendations.Count;
 
         public override string ToString()
         {

@@ -20,6 +20,15 @@ namespace ProNet
             while (1 - AverageRank() >= 0.000001m && count < 10000);
         }
 
+        public decimal CalculateRank(IProgrammer programmer)
+        {
+            var _recommendedBys = programmer.RecommendedBys;
+
+            // (1 - d) + d(PR(T1)/C(T1)) + ... + d(PR(Tn)/C(Tn))
+            return _recommendedBys
+                .Aggregate(1m - 0.85m, (current, p) => current + 0.85m * p.ProgrammerRankShare);
+        }
+
         private decimal AverageRank()
         {
             var totalRank = 0m;

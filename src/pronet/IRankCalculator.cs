@@ -5,5 +5,6 @@ namespace ProNet
     public interface IRankCalculator
     {
         void Calculate(IEnumerable<IProgrammer> programmers);
+        decimal CalculateRank(IProgrammer programmer);
     }
 }
