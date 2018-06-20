@@ -11,5 +11,7 @@ namespace ProNet
         void UpdateRank();
         void Recommends(Programmer programmer);
         IEnumerable<IProgrammer> Relations();
+        IEnumerable<Programmer> RecommendedBys { get; }
+        decimal ProgrammerRankShare { get; }
     }
 }

@@ -11,18 +11,22 @@ namespace ProNet
         private readonly ICollection<Programmer> _recommendations;
         private readonly ICollection<Programmer> _recommendedBys;
         private readonly IEnumerable<string> _skills;
+        private readonly IRankCalculator _rankCalculator;
+        private string Name => _name;
 
-        public Programmer(string name, IEnumerable<string> skills)
+        public Programmer(string name, IEnumerable<string> skills, IRankCalculator rankCalculator)
         {
             _recommendations = new List<Programmer>();
             _recommendedBys = new List<Programmer>();
             _name = name;
             _skills = skills;
+            _rankCalculator = rankCalculator;
         }
 
         public ProgrammerDto Details => new ProgrammerDto(Name, _rank, _recommendations.Select(programmer => programmer.Name), _skills);
         public bool IsNamed(string name) => Name.Equals(name);
-        private string Name => _name;
+        public IEnumerable<Programmer> RecommendedBys => _recommendedBys;
+        public decimal ProgrammerRankShare => _rank / _recommendations.Count;
 
         public void Recommends(Programmer programmer)
         {
@@ -30,19 +34,20 @@ namespace ProNet
             programmer.RecommendedBy(this);
         }
 
+        public void UpdateRank()
+        {
+            _rank = _rankCalculator.CalculateRank(this);
+        }
+
+        public IEnumerable<IProgrammer> Relations()
+        {
+            return _recommendations.Concat(_recommendedBys);
+        }
+
         private void RecommendedBy(Programmer programmer)
         {
             _recommendedBys.Add(programmer);
         }
-
-        public void UpdateRank()
-        {
-            // (1 - d) + d(PR(T1)/C(T1)) + ... + d(PR(Tn)/C(Tn))
-            _rank = _recommendedBys
-                .Aggregate(1m - 0.85m, (current, programmer) => current + 0.85m * programmer.ProgrammerRankShare);
-        }
-
-        private decimal ProgrammerRankShare => _rank / _recommendations.Count;
 
         public override string ToString()
         {
@@ -60,11 +65,6 @@ namespace ProNet
         public override int GetHashCode()
         {
             return Name.GetHashCode();
-        }
-
-        public IEnumerable<IProgrammer> Relations()
-        {
-            return _recommendations.Concat(_recommendedBys);
         }
     }
 }

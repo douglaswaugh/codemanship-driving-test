@@ -10,7 +10,6 @@ namespace ProNet
         public ProNet(INetworkStore networkStore)
         {
             _network = networkStore.GetNetwork();
-            _network.Calculate();
         }
 
         public string[] Skills(string programmer)
@@ -35,7 +34,7 @@ namespace ProNet
 
         public double TeamStrength(string language, string[] team)
         {
-            throw new System.NotImplementedException();
+            return Convert.ToDouble(_network.TeamStrength(language, team));
         }
 
         public string[] FindStrongestTeam(string language, int teamSize)

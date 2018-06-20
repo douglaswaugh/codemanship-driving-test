@@ -165,7 +165,7 @@ namespace Tests
 
         private Programmer BuildProgrammer(string name)
         {
-            return new Programmer(name, new string[]{});
+            return new Programmer(name, new string[]{}, null);
         }
 
         private Tuple<int, IProgrammer> BuildTuple(int degreeOfSeparation, IProgrammer programmer)

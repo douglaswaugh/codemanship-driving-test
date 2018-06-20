@@ -7,18 +7,16 @@ namespace ProNet
     {
         public readonly IEnumerable<IProgrammer> _programmers;
         private readonly DegreesOfSeparation _degreesOfSeparation;
+        private readonly ITeamFactory _teamFactory;
+        private readonly IRankCalculator _rankCalculator;
 
-        public Network(IEnumerable<IProgrammer> programmers, IDegreesOfSeparationFactory degreesOfSeparationFactory)
+        public Network(IEnumerable<IProgrammer> programmers, IDegreesOfSeparationFactory degreesOfSeparationFactory, ITeamFactory teamFactory, IRankCalculatorFactory rankCalculatorFactory)
         {
             _programmers = programmers;
             _degreesOfSeparation = degreesOfSeparationFactory.BuildDegreesOfSeparation(_programmers);
-        }
-
-        public void Calculate()
-        {
-            do
-                UpdateRanks();
-            while (1 - AverageRank() >= 0.000001m);
+            _teamFactory = teamFactory;
+            _rankCalculator = rankCalculatorFactory.BuildRankCalculator();
+            _rankCalculator.Calculate(_programmers);
         }
 
         public ProgrammerDto GetDetailsFor(string name)
@@ -31,27 +29,17 @@ namespace ProNet
             return _degreesOfSeparation.Between(GetByName(programmer1), GetByName(programmer2));
         }
 
+        public decimal TeamStrength(string language, string[] memberNames)
+        {
+            var members = memberNames.Select(name => GetByName(name));
+            var team = _teamFactory.CreateTeam(language, members, _degreesOfSeparation);
+
+            return team.Strength;
+        }
+
         private IProgrammer GetByName(string name)
         {
             return _programmers.Single(programmer => programmer.IsNamed(name));
-        }
-
-        private decimal AverageRank()
-        {
-            var totalRank = 0m;
-            foreach (var programmer in _programmers)
-            {
-                totalRank += programmer.Details.Rank;
-            }
-            return totalRank / _programmers.Count();
-        }
-
-        private void UpdateRanks()
-        {
-            foreach (var programmer in _programmers)
-            {
-                programmer.UpdateRank();
-            }
         }
     }
 }
