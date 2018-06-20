@@ -7,11 +7,13 @@ namespace ProNet.Test
     public class CombinatorTests
     {
         private IProgrammer _programmer1;
+        private IProgrammer _programmer2;
 
         [SetUp]
         public void SetUp()
         {
             _programmer1 = new Programmer("programmer1", new List<string>(), new RankCalculator());
+            _programmer2 = new Programmer("programmer2", new List<string>(), new RankCalculator());
         }
 
         [Test]
@@ -22,7 +24,7 @@ namespace ProNet.Test
 
             var combinations = combinator.CombinationsFor(programmers, 0);
 
-            Assert.That(combinations, Is.EquivalentTo(new List<IProgrammer>()));
+            Assert.That(combinations, Is.EquivalentTo(new List<IEnumerable<IProgrammer>>()));
         }
 
         [Test]
@@ -33,7 +35,7 @@ namespace ProNet.Test
 
             var combinations = combinator.CombinationsFor(programmers, 1);
 
-            Assert.That(combinations, Is.EquivalentTo(new List<IProgrammer> { _programmer1 }));
+            Assert.That(combinations, Is.EquivalentTo(new List<IEnumerable<IProgrammer>> { new List<IProgrammer> {_programmer1 }}));
         }
     }
 }

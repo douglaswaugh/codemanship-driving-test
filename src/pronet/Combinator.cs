@@ -5,13 +5,13 @@ namespace ProNet.Test
 {
     public class Combinator
     {
-        public IEnumerable<IProgrammer> CombinationsFor(IEnumerable<IProgrammer> programmers, int size)
+        public IEnumerable<IEnumerable<IProgrammer>> CombinationsFor(IEnumerable<IProgrammer> programmers, int size)
         {
             if (size == 0)
-                return new List<IProgrammer>();
+                return new List<IEnumerable<IProgrammer>>();
 
             else
-                return programmers;
+                return new List<IEnumerable<IProgrammer>> { programmers };
         }
     }
 }
