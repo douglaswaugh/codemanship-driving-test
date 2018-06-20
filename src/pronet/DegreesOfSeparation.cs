@@ -1,37 +1,76 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace ProNet
 {
+    // TODO: This could probably do with being refactored a bit
     public class DegreesOfSeparation
     {
-        DegreesOfSeparationNetwork _degreesOfSeparationNetwork;
+        private readonly IEnumerable<IProgrammer> _programmers;
 
-        public DegreesOfSeparation()
+        public DegreesOfSeparation(IEnumerable<IProgrammer> programmers)
         {
-            _degreesOfSeparationNetwork = new DegreesOfSeparationNetwork();
+            _programmers = programmers;
         }
 
-        public int Calculate(IProgrammer programmerFrom, IProgrammer programmerTo)
+        public int Between(IProgrammer programmerFrom, IProgrammer programmerTo)
         {
-            if (programmerFrom == programmerTo)
+            if (programmerFrom.Equals(programmerTo))
                 return 0;
-            
-            var network = _degreesOfSeparationNetwork.BuildNetwork(programmerFrom);
 
-            return FindDegrees(programmerTo, network);
+            var parents = BuildParentPointers(programmerFrom);
+
+            return ShortestPath(programmerFrom, programmerTo, parents);
         }
 
-        private int FindDegrees(IProgrammer programmerTo, List<Tuple<int, IProgrammer>> network)
+        private Dictionary<IProgrammer, IProgrammer> BuildParentPointers(IProgrammer programmerFrom)
         {
-            foreach (var networkProgrammer in network)
+            var parents = new Dictionary<IProgrammer, IProgrammer>();
+            var queue = new Queue<IProgrammer>();
+
+            queue.Enqueue(programmerFrom);
+
+            while (queue.Count() > 0)
             {
-                if (networkProgrammer.Item2.Equals(programmerTo))
-                    return networkProgrammer.Item1;
+                AddAdjacentNodes(parents, queue);
+                queue.Dequeue();
             }
 
-            throw new ProgrammersNotConnectedException();
+            return parents;
+        }
+
+        private static void AddAdjacentNodes(Dictionary<IProgrammer, IProgrammer> parents, Queue<IProgrammer> queue)
+        {
+            var candidate = queue.First();
+
+            foreach (var programmer in candidate.Relations())
+            {
+                AddNode(parents, queue, candidate, programmer);
+            }
+        }
+
+        private static void AddNode(Dictionary<IProgrammer, IProgrammer> parents, Queue<IProgrammer> queue, IProgrammer parent, IProgrammer programmer)
+        {
+            if (!parents.ContainsKey(programmer))
+            {
+                queue.Enqueue(programmer);
+                parents.Add(programmer, parent);
+            }
+        }
+
+        private static int ShortestPath(IProgrammer programmerFrom, IProgrammer programmerTo, Dictionary<IProgrammer, IProgrammer> parents)
+        {
+            var degreesOfSeparation = 0;
+            IProgrammer parentProgrammer = programmerTo;
+
+            while (!programmerFrom.Equals(parentProgrammer))
+            {
+                parentProgrammer = parents[parentProgrammer];
+                degreesOfSeparation++;
+            }
+
+            return degreesOfSeparation;
         }
     }
 }

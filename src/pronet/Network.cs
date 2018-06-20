@@ -6,12 +6,12 @@ namespace ProNet
     public class Network : INetwork
     {
         public readonly IEnumerable<IProgrammer> _programmers;
-        private DegreesOfSeparation _degreesOfSeparation;
+        private readonly DegreesOfSeparation _degreesOfSeparation;
 
-        public Network(IEnumerable<IProgrammer> programmers)
+        public Network(IEnumerable<IProgrammer> programmers, IDegreesOfSeparationFactory degreesOfSeparationFactory)
         {
             _programmers = programmers;
-            _degreesOfSeparation = new DegreesOfSeparation();
+            _degreesOfSeparation = degreesOfSeparationFactory.BuildDegreesOfSeparation(_programmers);
         }
 
         public void Calculate()
@@ -28,7 +28,7 @@ namespace ProNet
 
         public int DegreesOfSeparation(string programmer1, string programmer2)
         {
-            return _degreesOfSeparation.Calculate(GetByName(programmer1), GetByName(programmer2));
+            return _degreesOfSeparation.Between(GetByName(programmer1), GetByName(programmer2));
         }
 
         private IProgrammer GetByName(string name)

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ProNet
@@ -19,19 +20,19 @@ namespace ProNet
             _skills = skills;
         }
 
-        public IEnumerable<IProgrammer> Relations => _recommendations.Concat(_recommendedBys);
-
         public ProgrammerDto Details => new ProgrammerDto(Name, _rank, _recommendations.Select(programmer => programmer.Name), _skills);
-
-        public bool IsNamed(string name)
-        {
-            return Name.Equals(name);
-        }
+        public bool IsNamed(string name) => Name.Equals(name);
+        private string Name => _name;
 
         public void Recommends(Programmer programmer)
         {
             _recommendations.Add(programmer);
             programmer.RecommendedBy(this);
+        }
+
+        private void RecommendedBy(Programmer programmer)
+        {
+            _recommendedBys.Add(programmer);
         }
 
         public void UpdateRank()
@@ -41,14 +42,7 @@ namespace ProNet
                 .Aggregate(1m - 0.85m, (current, programmer) => current + 0.85m * programmer.ProgrammerRankShare);
         }
 
-        private string Name => _name;
-
         private decimal ProgrammerRankShare => _rank / _recommendations.Count;
-
-        private void RecommendedBy(Programmer programmer)
-        {
-            _recommendedBys.Add(programmer);
-        }
 
         public override string ToString()
         {
@@ -66,6 +60,11 @@ namespace ProNet
         public override int GetHashCode()
         {
             return Name.GetHashCode();
+        }
+
+        public IEnumerable<IProgrammer> Relations()
+        {
+            return _recommendations.Concat(_recommendedBys);
         }
     }
 }

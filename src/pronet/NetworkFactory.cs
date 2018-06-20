@@ -15,7 +15,7 @@ namespace ProNet
 
         public INetwork BuildNetwork(IReadOnlyDictionary<string, IEnumerable<string>> recommendations, IReadOnlyDictionary<string, IEnumerable<string>> skills)
         {
-            return new Network(_programmerFactory.BuildProgrammers(recommendations, skills));
+            return new Network(_programmerFactory.BuildProgrammers(recommendations, skills), new DegreesOfSeparationFactory());
         }
     }
 }
