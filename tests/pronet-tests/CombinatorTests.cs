@@ -35,7 +35,18 @@ namespace ProNet.Test
 
             var combinations = combinator.CombinationsFor(programmers, 1);
 
-            Assert.That(combinations, Is.EquivalentTo(new List<IEnumerable<IProgrammer>> { new List<IProgrammer> {_programmer1 }}));
+            Assert.That(combinations, Is.EquivalentTo(new List<IEnumerable<IProgrammer>> { new List<IProgrammer> { _programmer1 }}));
+        }
+
+        [Test]
+        public void Should_return_2_collections_of_size_1_for_combinations_of_size_1_from_collection_of_size_2()
+        {
+            var combinator = new Combinator();
+            var programmers = new List<IProgrammer> { _programmer1, _programmer2 };
+
+            var combinations = combinator.CombinationsFor(programmers, 1);
+
+            Assert.That(combinations, Is.EquivalentTo(new List<IEnumerable<IProgrammer>> { new List<IProgrammer> { _programmer1 }, new List<IProgrammer> { _programmer2 }}));
         }
     }
 }

@@ -11,7 +11,14 @@ namespace ProNet.Test
                 return new List<IEnumerable<IProgrammer>>();
 
             else
-                return new List<IEnumerable<IProgrammer>> { programmers };
+            {
+                var combinations = new List<IEnumerable<IProgrammer>>();
+
+                foreach(var programmer in programmers)
+                    combinations.Add(new List<IProgrammer>{programmer});
+
+                return combinations;
+            }
         }
     }
 }
