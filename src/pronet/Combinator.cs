@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ProNet.Test
 {
@@ -9,6 +10,9 @@ namespace ProNet.Test
         {
             if (size == 0)
                 return new List<IEnumerable<IProgrammer>>();
+
+            if (programmers.Count() == size)
+                return new List<IEnumerable<IProgrammer>>{programmers};
 
             else
             {

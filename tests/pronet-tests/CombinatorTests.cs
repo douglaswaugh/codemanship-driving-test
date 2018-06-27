@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 
 namespace ProNet.Test
@@ -47,6 +48,17 @@ namespace ProNet.Test
             var combinations = combinator.CombinationsFor(programmers, 1);
 
             Assert.That(combinations, Is.EquivalentTo(new List<IEnumerable<IProgrammer>> { new List<IProgrammer> { _programmer1 }, new List<IProgrammer> { _programmer2 }}));
+        }
+
+        [Test]
+        public void Should_return_1_collection_of_size_2_for_combinations_of_size_2_from_collection_of_size_2()
+        {
+            var combinator = new Combinator();
+            var programmers = new List<IProgrammer>{_programmer1, _programmer2};
+
+            var combinations = combinator.CombinationsFor(programmers, 2);
+
+            Assert.That(combinations, Is.EquivalentTo(new List<IEnumerable<IProgrammer>>{new List<IProgrammer>{_programmer1, _programmer2}}));
         }
     }
 }
