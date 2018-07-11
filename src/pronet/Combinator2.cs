@@ -15,22 +15,16 @@ namespace ProNet
                 return new List<IEnumerable<IProgrammer>>{programmers};
 
             var combinations = new List<ICollection<IProgrammer>>();
+            combinations.Add(new List<IProgrammer>());
 
             for (var i = 0;i<size;i++)
-            {
-                combinations.Add(new List<IProgrammer>());
-            }
-
-            for (var i = 0;i<size;i++)
-            {
-                AddSetToCombinations(combinations, programmers);
-            }
+                combinations = AddSetToCombinations(combinations, programmers);
 
             combinations = RemoveCombinationsWithDuplicateProgrammers(combinations);
             combinations = OrderCombinations(combinations);
             combinations = RemoveDuplicateCombinations(combinations);
 
-            return null;
+            return combinations;
         }
 
         public List<ICollection<IProgrammer>> RemoveDuplicateCombinations(List<ICollection<IProgrammer>> combinations)
@@ -72,7 +66,7 @@ namespace ProNet
             return reducedCombinations;
         }
 
-        public IEnumerable<ICollection<IProgrammer>> AddSetToCombinations(IEnumerable<ICollection<IProgrammer>> combinations, IEnumerable<IProgrammer> programmers)
+        public List<ICollection<IProgrammer>> AddSetToCombinations(IEnumerable<ICollection<IProgrammer>> combinations, IEnumerable<IProgrammer> programmers)
         {
             var newCombinations = new List<ICollection<IProgrammer>>();
 

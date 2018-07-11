@@ -45,7 +45,7 @@ namespace ProNet.Test
         }
 
         [Test]
-        public void Should_return_9_collections_of_size_3_for_combinations_of_size_3_from_collection_of_size_5()
+        public void Should_return_10_collections_of_size_3_from_collection_of_size_5()
         {
             var combinator = new Combinator2();
             var programmers = new List<IProgrammer>{_programmer1, _programmer2, _programmer3, _programmer4, _programmer5};
@@ -59,6 +59,7 @@ namespace ProNet.Test
                 new List<IProgrammer>{_programmer1, _programmer3, _programmer4},
                 new List<IProgrammer>{_programmer1, _programmer3, _programmer5},
                 new List<IProgrammer>{_programmer1, _programmer4, _programmer5},
+                new List<IProgrammer>{_programmer2, _programmer3, _programmer4},
                 new List<IProgrammer>{_programmer2, _programmer3, _programmer5},
                 new List<IProgrammer>{_programmer2, _programmer4, _programmer5},
                 new List<IProgrammer>{_programmer3, _programmer4, _programmer5},
