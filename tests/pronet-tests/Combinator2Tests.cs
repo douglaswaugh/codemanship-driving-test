@@ -165,5 +165,19 @@ namespace ProNet.Test
 
             Assert.That(uniqueCombinations, Is.EquivalentTo(new List<ICollection<IProgrammer>>(){new List<IProgrammer> {_programmer1}}));
         }
+
+        [Test]
+        public void Should_remove_duplicate_combinations_of_size_2()
+        {
+            var combinator = new Combinator2();
+            var combinations = new List<ICollection<IProgrammer>> {
+                new List<IProgrammer> {_programmer1, _programmer2},
+                new List<IProgrammer> {_programmer1, _programmer2}
+            };
+
+            var uniqueCombinations = combinator.RemoveDuplicateCombinations(combinations);
+
+            Assert.That(uniqueCombinations, Is.EquivalentTo(new List<ICollection<IProgrammer>>(){new List<IProgrammer> {_programmer1, _programmer2}}));
+        }
     }
 }
