@@ -33,9 +33,17 @@ namespace ProNet
             return null;
         }
 
-        private List<ICollection<IProgrammer>> RemoveDuplicateCombinations(List<ICollection<IProgrammer>> combinations)
+        public List<ICollection<IProgrammer>> RemoveDuplicateCombinations(List<ICollection<IProgrammer>> combinations)
         {
-            return null;
+            var uniqueCombinations = new List<ICollection<IProgrammer>>();
+
+            foreach (var combination in combinations)
+            {
+                if (!uniqueCombinations.Any(c => c.SequenceEqual(combination)))
+                    uniqueCombinations.Add(combination);
+            }
+
+            return uniqueCombinations;
         }
 
         public List<ICollection<IProgrammer>> OrderCombinations(List<ICollection<IProgrammer>> combinations)
