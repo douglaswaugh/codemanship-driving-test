@@ -64,15 +64,22 @@ namespace ProNet
             return reducedCombinations;
         }
 
-        public void AddSetToCombinations(IEnumerable<ICollection<IProgrammer>> combinations, IEnumerable<IProgrammer> programmers)
+        public IEnumerable<ICollection<IProgrammer>> AddSetToCombinations(IEnumerable<ICollection<IProgrammer>> combinations, IEnumerable<IProgrammer> programmers)
         {
+            var newCombinations = new List<ICollection<IProgrammer>>();
+
             foreach(var combination in combinations)
             {
                 foreach(var programmer in programmers)
                 {
-                    combination.Add(programmer);
+                    var newCombination = new List<IProgrammer>();
+                    newCombination.AddRange(combination);
+                    newCombination.Add(programmer);
+                    newCombinations.Add(newCombination);
                 }
             }
+
+            return newCombinations;
         }
     }
 }

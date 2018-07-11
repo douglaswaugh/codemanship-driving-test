@@ -112,5 +112,21 @@ namespace ProNet.Test
 
             Assert.That(orderedCombinations, Is.EquivalentTo(expected));
         }
+
+        [Test]
+        public void Should_add_set_to_initial_combinations()
+        {
+            var combinator = new Combinator2();
+
+            var combinationsWithAddedSet = combinator.AddSetToCombinations(new List<ICollection<IProgrammer>> { new List<IProgrammer>() }, new List<IProgrammer>{_programmer1, _programmer2, _programmer3});
+
+            var expected = new List<ICollection<IProgrammer>> {
+                new List<IProgrammer> {_programmer1},
+                new List<IProgrammer> {_programmer2},
+                new List<IProgrammer> {_programmer3}
+            };
+
+            Assert.That(combinationsWithAddedSet, Is.EquivalentTo(expected));
+        }
     }
 }
