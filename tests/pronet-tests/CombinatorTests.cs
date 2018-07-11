@@ -60,5 +60,43 @@ namespace ProNet.Test
 
             Assert.That(combinations, Is.EquivalentTo(new List<IEnumerable<IProgrammer>>{new List<IProgrammer>{_programmer1, _programmer2}}));
         }
+
+        [Test]
+        public void Should_join_current_set_with_empty_combinations()
+        {
+            var set = new List<IProgrammer>{_programmer1, _programmer2};
+            var initialCombinations = new List<IEnumerable<IProgrammer>>();
+
+            var combinator = new Combinator();
+
+            var combinations = combinator.AddSetToCombinations(set, initialCombinations);
+
+            var expected = new List<IEnumerable<IProgrammer>>
+            {
+                new List<IProgrammer>{_programmer1},
+                new List<IProgrammer>{_programmer2}
+            };
+
+            Assert.That(combinations, Is.EquivalentTo(expected));
+        }
+
+        [Test]
+        public void Should_join_current_set_with_not_empty_combinations()
+        {
+            var set = new List<IProgrammer>{_programmer1, _programmer2};
+            var initialCombinations = new List<IEnumerable<IProgrammer>>{new List<IProgrammer>{_programmer3}};
+
+            var combinator = new Combinator();
+
+            var combinations = combinator.AddSetToCombinations(set, initialCombinations);
+
+            var expected = new List<IEnumerable<IProgrammer>>
+            {
+                new List<IProgrammer>{_programmer1,_programmer3},
+                new List<IProgrammer>{_programmer2,_programmer3}
+            };
+
+            Assert.That(combinations, Is.EquivalentTo(expected));
+        }
     }
 }

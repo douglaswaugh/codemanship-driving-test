@@ -24,5 +24,29 @@ namespace ProNet.Test
                 return combinations;
             }
         }
+
+        public IEnumerable<IEnumerable<IProgrammer>> AddSetToCombinations(IEnumerable<IProgrammer> set, IEnumerable<IEnumerable<IProgrammer>> initialCombinations)
+        {
+            if(!initialCombinations.Any())
+                return set.Select(element => new List<IProgrammer>{element});
+
+            var combinations = new List<IEnumerable<IProgrammer>>();
+
+            foreach(var element in set)
+            {
+                foreach (var combination in initialCombinations)
+                {
+                    if (!combination.Contains(element))
+                    {
+                        var newCombination = new List<IProgrammer>();
+                        newCombination.Add(element);
+                        newCombination.AddRange(combination);
+                        combinations.Add(newCombination);
+                    }
+                }
+            }
+
+            return combinations;
+        }
     }
 }
