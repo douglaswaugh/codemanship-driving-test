@@ -9,12 +9,14 @@ namespace ProNet.Test
     {
         private IProgrammer _programmer1;
         private IProgrammer _programmer2;
+        private IProgrammer _programmer3;
 
         [SetUp]
         public void SetUp()
         {
             _programmer1 = new Programmer("programmer1", new List<string>(), new RankCalculator());
             _programmer2 = new Programmer("programmer2", new List<string>(), new RankCalculator());
+            _programmer3 = new Programmer("programmer3", new List<string>(), new RankCalculator());
         }
 
         [Test]
@@ -59,6 +61,24 @@ namespace ProNet.Test
             var combinations = combinator.CombinationsFor(programmers, 2);
 
             Assert.That(combinations, Is.EquivalentTo(new List<IEnumerable<IProgrammer>>{new List<IProgrammer>{_programmer1, _programmer2}}));
+        }
+
+        [Test]
+        public void Should_return_3_collections_of_size_2_from_a_collection_of_size_3()
+        {
+            var combinator = new Combinator();
+            var programmers = new List<IProgrammer>{_programmer1, _programmer2, _programmer3};
+
+            var combinations = combinator.CombinationsFor(programmers, 2);
+
+            var expected = new List<IEnumerable<IProgrammer>>
+            {
+                new List<IProgrammer> { _programmer1, _programmer2 },
+                new List<IProgrammer> { _programmer1, _programmer3 },
+                new List<IProgrammer> { _programmer2, _programmer3 }
+            };
+
+            Assert.That(combinations, Is.EquivalentTo(expected));
         }
 
         [Test]

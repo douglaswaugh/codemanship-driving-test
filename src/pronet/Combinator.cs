@@ -16,10 +16,13 @@ namespace ProNet.Test
 
             else
             {
-                var combinations = new List<IEnumerable<IProgrammer>>();
+                IEnumerable<IEnumerable<IProgrammer>> combinations = new List<IEnumerable<IProgrammer>>();
 
-                foreach(var programmer in programmers)
-                    combinations.Add(new List<IProgrammer>{programmer});
+                for (int i = size; i > 0; i--)
+                {
+                    var set = programmers.Skip(i - 1).Take(programmers.Count() - (size - 1));
+                    combinations = AddSetToCombinations(set, combinations);
+                }
 
                 return combinations;
             }
