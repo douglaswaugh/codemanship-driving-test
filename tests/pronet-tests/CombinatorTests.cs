@@ -53,7 +53,7 @@ namespace ProNet.Test
         }
 
         [Test]
-        public void Should_return_1_collection_of_size_2_for_combinations_of_size_2_from_collection_of_size_2()
+        public void Should_return_1_collections_of_size_2_for_combinations_of_size_2_from_collection_of_size_2()
         {
             var combinator = new Combinator();
             var programmers = new List<IProgrammer>{_programmer1, _programmer2};
