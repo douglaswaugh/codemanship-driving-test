@@ -94,5 +94,23 @@ namespace ProNet.Test
 
             Assert.That(reducedCombinations, Is.EquivalentTo(combinations));
         }
+
+        [Test]
+        public void Should_order_elements_by_name()
+        {
+            var combinations = new List<ICollection<IProgrammer>> {
+                new List<IProgrammer>{_programmer2, _programmer3, _programmer4, _programmer1}
+            };
+
+            var combinator = new Combinator2();
+
+            var orderedCombinations = combinator.OrderCombinations(combinations);
+
+            var expected = new List<ICollection<IProgrammer>> {
+                new List<IProgrammer>{_programmer1, _programmer2, _programmer3, _programmer4}
+            };
+
+            Assert.That(orderedCombinations, Is.EquivalentTo(expected));
+        }
     }
 }
