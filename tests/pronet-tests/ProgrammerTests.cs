@@ -30,5 +30,21 @@ namespace ProNet.Test.Unit
 
             Assert.That(degrees, Is.EqualTo(1));
         }
+
+        [Test]
+        public void Should_state_programmer_has_skill_when_programmer_has_skill()
+        {
+            var programmer = new Programmer("Programmer1", new string[]{ "skill" }, null);
+
+            Assert.That(programmer.HasSkill("skill"), Is.True);
+        }
+
+        [Test]
+        public void Should_state_programmer_does_not_have_skill_when_programmer_does_not_have_skill()
+        {
+            var programmer = new Programmer("Programmer1", new string[] { "skill" }, null);
+
+            Assert.That(programmer.HasSkill("missing skill"), Is.False);
+        }
     }
 }

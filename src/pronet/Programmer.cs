@@ -49,6 +49,11 @@ namespace ProNet
             _recommendedBys.Add(programmer);
         }
 
+        public bool HasSkill(string language)
+        {
+            return _skills.Any(skill => skill == language);
+        }
+
         public override string ToString()
         {
             return Name;

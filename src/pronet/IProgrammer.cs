@@ -13,5 +13,6 @@ namespace ProNet
         IEnumerable<IProgrammer> Relations();
         IEnumerable<Programmer> RecommendedBys { get; }
         decimal ProgrammerRankShare { get; }
+        bool HasSkill(string language);
     }
 }
