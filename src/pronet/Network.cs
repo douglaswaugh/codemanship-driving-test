@@ -10,7 +10,10 @@ namespace ProNet
         private readonly ITeamFactory _teamFactory;
         private readonly IRankCalculator _rankCalculator;
 
-        public Network(IEnumerable<IProgrammer> programmers, IDegreesOfSeparationFactory degreesOfSeparationFactory, ITeamFactory teamFactory, IRankCalculatorFactory rankCalculatorFactory)
+        public Network(IEnumerable<IProgrammer> programmers,
+            IDegreesOfSeparationFactory degreesOfSeparationFactory,
+            ITeamFactory teamFactory,
+            IRankCalculatorFactory rankCalculatorFactory)
         {
             _programmers = programmers;
             _degreesOfSeparation = degreesOfSeparationFactory.BuildDegreesOfSeparation(_programmers);
