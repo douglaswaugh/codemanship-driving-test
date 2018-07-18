@@ -180,5 +180,23 @@ namespace ProNet.Test
 
             Assert.That(uniqueCombinations, Is.EquivalentTo(new List<ICollection<IProgrammer>>(){new List<IProgrammer> {_programmer1, _programmer2}}));
         }
+
+        [Test]
+        public void Should_create_2_teams_with_each_member_as_leader_from_combination_of_size_2()
+        {
+            var combinations = new List<ICollection<IProgrammer>> {
+                new List<IProgrammer> {_programmer1, _programmer2}
+            };
+
+            var combinator = new Combinator2();
+
+            var teams = combinator.AddTeamsWithEachMemberAsLeader(combinations);
+
+            var expected = new List<ICollection<IProgrammer>>(){
+                new List<IProgrammer> {_programmer1, _programmer2},
+                new List<IProgrammer> {_programmer2, _programmer1}};
+
+            Assert.That(teams, Is.EquivalentTo(expected));
+        }
     }
 }

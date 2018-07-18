@@ -83,5 +83,23 @@ namespace ProNet
 
             return newCombinations;
         }
+
+        public List<ICollection<IProgrammer>> AddTeamsWithEachMemberAsLeader(List<ICollection<IProgrammer>> combinations)
+        {
+            var newCombinations = new List<ICollection<IProgrammer>>();
+
+            foreach(var combination in combinations)
+            {
+                foreach(var member in combination)
+                {
+                    var newCombination = new List<IProgrammer>();
+                    newCombination.Add(member);
+                    newCombination.AddRange(combination.Where(m => m != member));
+                    newCombinations.Add(newCombination);
+                }
+            }
+
+            return newCombinations;
+        }
     }
 }
